@@ -1,0 +1,116 @@
+openapi: 3.0.3
+info:
+  title: Wallet Vinci Stock eXchange Service
+  description: Microservice handling the wallet of the investors
+  version: 1.0.0
+servers:
+  - url: 'https'
+paths:
+
+  /wallet/{email}:
+    parameters:
+      - name: email
+        in: path
+        description: Email of the investor
+        required: true
+        schema:
+          type: string
+          example: investor@hotmail.com
+
+    get:
+      summary: Read one wallet
+      responses:
+        404:
+          description: investor wallet not found
+        200:
+          description: Returned wallet
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/wallet'
+    post:
+      summary: Add stocks or cash in the wallet
+      requestBody:
+        description: Stock or cash to add
+        required: true
+        content:
+          'application/json':
+            schema:
+              allOf:
+                - type: object
+                  properties:
+                    cash:
+                      type: number
+                      description: Amount of cash to add
+                - $ref: '#/components/schemas/stock'
+      responses:
+        200:
+          description: The wallet has been updated
+    put:
+      summary: Modify the quantity of stocks
+      requestBody:
+        description: Stock to modify
+        required: true
+        content:
+          'application/json':
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The stock name
+                    pattern: '^[A-Z]{4}$'
+                  quantity:
+                    type: number
+                    description: The new quantity of stocks
+                  price:
+                    type: number
+                    description: Amount of money to add/remove to the wallet
+                  operationType:
+                    type: string
+                    enum:
+                      - sale
+                      - purchase
+                    description: Type of operation
+      responses:
+        200:
+          description: The wallet has been updated
+
+
+components:
+  schemas:
+    stock:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The stock name
+          pattern: '^[A-Z]{4}$'
+        quantity:
+          type: number
+          description: The quantity of stocks
+    wallet:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email of the investor
+        stocks:
+          type: array
+          items:
+            $ref: '#/components/schemas/stock'
+          description: A list of stocks
+        cash:
+          type: number
+          description: Amount of cash in the wallet
+      example:
+        email: investor@hotmail.com
+        stocks:
+          - name: LNRD
+            quantity : 500
+          - name: AAPL
+            quantity : -600
+        cash: -5000
+

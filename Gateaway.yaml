@@ -1,0 +1,270 @@
+openapi: 3.0.3
+info:
+  title: Vinci Stock eXchange Service Gateaway
+  description: Microservice handling gateway for Vinci Stock eXchange Service project
+  version: 1.0.0
+servers:
+  - url: 'https'
+paths:
+  
+  /auth:
+    post:
+      summary: Connect user
+      requestBody:
+        description: Credentials of the user
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/credentials'
+      responses:
+        400:
+          description: Invalid
+        401:
+          description: Wrong username or password
+        200:
+          description: Returned token
+          content:
+            'application/json':
+              schema:
+                type: string
+                example: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJhdXRoMCIsInBzZXVkbyI6IkNhdDRMaWZlIn0.LqfooEI-I9VTBo-isjm812ttnIPagMCwdhRkW5ngn0_tlLX86LRoxahgskmgIeWDbm4Mu3y3D8Qbhq_71hNQTA
+
+  /users/{email}:
+    parameters:
+      - name: email
+        in: path
+        description: Email of the user
+        schema:
+          type: string
+        example: investor@hotmail.com
+    post:
+      summary: Create user
+      requestBody:
+        description: User
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/userWithCredentials'
+      responses:
+        400:
+          description: Invalid
+        409:
+          description: Already exists
+        201:
+          description: Created
+    put:
+      summary: Update user
+      requestBody:
+        description: User
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/userWithCredentials'
+      responses:
+        400:
+          description: Invalid
+        401:
+          description: Wrong authorization token
+        403:
+          description: Wrong user
+        404:
+          description: Not found
+        200:
+          description: Updated
+    delete:
+      summary: Delete user
+      responses:
+        401:
+          description: Wrong authorization token
+        403:
+          description: Wrong user
+        404:
+          description: Not found
+        200:
+          description: Deleted
+  /wallet/{email}:
+    parameters:
+      - name: email
+        in: path
+        description: Email of the investor
+        required: true
+        schema:
+          type: string
+          example: investor@hotmail.com
+
+    get:
+      summary: Read one wallet
+      responses:
+        404:
+          description: investor wallet not found
+        200:
+          description: Returned wallet
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/wallet'
+        401:
+          description: Wrong authorization token
+    post:
+      summary: Add stocks or cash in the wallet
+      requestBody:
+        description: Stock or cash to add
+        required: true
+        content:
+          'application/json':
+            schema:
+              allOf:
+                - type: object
+                  properties:
+                    cash:
+                      type: number
+                      description: Amount of cash to add
+                - $ref: '#/components/schemas/stock'
+      responses:
+        200:
+          description: The wallet has been updated
+
+  /orders:
+    get:
+      summary: Read all stock orders on the market
+      responses:
+        200:
+          description: Returned list of order
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/order'
+    post:
+      summary: Create a stock order
+      requestBody:
+        description: the new order
+        content:
+          'application/json':
+            schema:
+              $ref: "#/components/schemas/order"
+      responses:
+        201:
+          description: Order created
+
+components:
+  schemas:
+    userWithCredentials:
+      type: object
+      properties:
+        email:
+          type: string
+        firstname:
+          type: string
+        lastname:
+          type: string
+        password:
+          type: string
+      example:
+        pseudo: investor@hotmail.com
+        firstname: Inv
+        lastname: Estor
+        password: password123
+    user:
+      type: object
+      properties:
+        email:
+          type: string
+        firstname:
+          type: string
+        lastname:
+          type: string
+      example:
+        pseudo: PetWard@hotmail.com
+        firstname: Marine
+        lastname: Pelland
+    credentials:
+      type: object
+      properties:
+        pseudo:
+          type: string
+        password:
+          type: string
+      example:
+        pseudo: PetWard
+        password: password123
+    stock:
+      type: object
+      properties:
+        name:
+          type: string
+          description: The stock name
+          pattern: '^[A-Z]{4}$'
+        quantity:
+          type: number
+          description: The quantity of stocks
+    wallet:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email of the investor
+        stocks:
+          type: array
+          items:
+            $ref: '#/components/schemas/stock'
+          description: A list of stocks
+        cash:
+          type: number
+          description: Amount of cash in the wallet
+      example:
+        email: investor@hotmail.com
+        stocks:
+          - name: LNRD
+            quantity: 500
+          - name: AAPL
+            quantity: -600
+        cash: -5000
+    order:
+      type: object
+      properties:
+        email:
+          type: string
+          description: the email of the user who submitted the order
+        stockName:
+          type: string
+          description: name of the stock
+          pattern: '^[A-Z]{4}$'
+        stockQuantity:
+          type: number
+          description: quantity of stocks to buy/sale
+        orderName:
+          type: string
+          enum:
+            - MARKET
+            - LIMIT
+        orderType:
+          type: string
+          enum:
+            - Sale
+            - Purchase
+        status:
+          type: string
+          enum:
+            - new
+            - partially executed
+            - executed
+          default: new
+        price:
+          oneOf:
+            - type: number
+            - type : 'null'
+          description: minimum price to buy/sell if order name is LIMIT
+        dateTimeOffer:
+          type: string
+          format: date-time
+      example:
+        email: investor@hotmail.com
+        stockName: AAPL
+        stockQuantity: 100
+        orderName: LIMIT
+        orderType: Purchase
+        status: new
+        price: 10
+        dateTimeOffer: "2023-10-27T10:30:00Z"
