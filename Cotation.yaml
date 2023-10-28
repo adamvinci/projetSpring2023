@@ -1,0 +1,71 @@
+openapi: 3.0.3
+info:
+  title: Cotation Vinci Stock eXchange Service
+  description: Microservice handling the price of stocks
+  version: 1.0.0
+servers:
+  - url: 'https'
+paths:
+  
+  /cotation:
+    get:
+      summary: Read all the stock current value
+      responses:
+        200:
+          description: Returned list of stocks values
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/stock'
+    put:
+      summary: Change the value of the stock depending of the last price it has been sold
+      requestBody:
+          required: true
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/stock'
+
+      responses:
+        200:
+          description: Uptaded stock
+
+  /cotation/{stock}:
+    parameters:
+      - name: stock
+        in: path
+        description: name of the stock to retrieve
+        required: true
+        schema:
+          type: string
+          pattern: '^[A-Z]{4}$'
+          example: 'AAPL'
+    get:
+      summary: Read one stock
+      responses:
+        404:
+          description: stock not found
+        200:
+          description: Returned Stock
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/stock'
+components:
+  schemas:
+    stock:
+      type: object
+      properties:
+        name:
+          type: string
+          description: name of the stock
+          pattern: '^[A-Z]{4}$'
+        price:
+          description: price of the stock
+          type: number
+      example:
+        name: 'AAPL'
+        price: 10
+
