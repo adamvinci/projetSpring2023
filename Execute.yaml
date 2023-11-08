@@ -1,0 +1,69 @@
+openapi: 3.0.3
+info:
+  title: Execute Vinci Stock eXchange Service
+  description: Microservice handling the execution of order
+  version: 1.0.0
+servers:
+  - url: 'https'
+paths:
+  /execute:
+    post:
+      summary: Save the order and execute it when possible
+      requestBody:
+        required: true
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/order'
+      responses:
+        200:
+          description: Order received
+components:
+  schemas:
+    order:
+      type: object
+      properties:
+        email:
+          type: string
+          description: the email of the user who submitted the order
+        stockName:
+          type: string
+          description: name of the stock
+          pattern: '^[A-Z]{4}$'
+        stockQuantity:
+          type: number
+          description: quantity of stocks to buy/sale
+        orderName:
+          type: string
+          enum:
+            - MARKET
+            - LIMIT
+        orderType:
+          type: string
+          enum:
+            - Sale
+            - Purchase
+        status:
+          type: string
+          enum:
+            - new
+            - partially executed
+            - executed
+          default: new
+        price:
+          oneOf:
+            - type: number
+            - type: 'null'
+          description: minimum price to buy/sell if order name is LIMIT
+        dateTimeOffer:
+          type: string
+          format: date-time
+      example:
+        email: investor@hotmail.com
+        stockName: AAPL
+        stockQuantity: 100
+        orderName: LIMIT
+        orderType: Purchase
+        status: new
+        price: 10
+        dateTimeOffer: "2023-10-27T10:30:00Z"

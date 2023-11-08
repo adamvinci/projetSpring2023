@@ -30,7 +30,7 @@ paths:
 
       responses:
         200:
-          description: Uptaded stock
+          description: Updated stock
 
   /cotation/{stock}:
     parameters:
@@ -46,7 +46,7 @@ paths:
       summary: Read one stock
       responses:
         404:
-          description: stock not found
+          description: Stock not found
         200:
           description: Returned Stock
           content:
@@ -60,10 +60,10 @@ components:
       properties:
         name:
           type: string
-          description: name of the stock
+          description: Name of the stock
           pattern: '^[A-Z]{4}$'
         price:
-          description: price of the stock
+          description: Price of the stock
           type: number
       example:
         name: 'AAPL'

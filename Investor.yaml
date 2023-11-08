@@ -55,6 +55,13 @@ paths:
           description: Email not found
         200:
           description: User deleted
+    get:
+      summary: Read a user and his cash
+      responses:
+        404:
+          description: Email not found
+        200:
+          description: Found user
 
 components:
   schemas:
@@ -70,7 +77,11 @@ components:
         lastname:
           type: string
           description: name of the investor
+        cash:
+          type: number
+          description: liquidity of the investor in euro
       example:
         pseudo: investor@hotmail.com
         firstname: Inv
         lastname: Estor
+        cash: 500

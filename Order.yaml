@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: Odre Vinci Stock eXchange Service
+  title: Order Vinci Stock eXchange Service
   description: Microservice handling the stock market order
   version: 1.0.0
 servers:
@@ -29,8 +29,17 @@ paths:
       responses:
         201:
           description: Order created
-
-
+    put:
+      summary: Update a stock when executed
+      requestBody:
+        description: the order to change
+        content:
+          'application/json':
+            schema:
+              $ref: "#/components/schemas/order"
+      responses:
+        200:
+          description: Order updated
 components:
   schemas:
     order:
