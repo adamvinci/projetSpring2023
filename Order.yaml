@@ -30,7 +30,7 @@ paths:
         201:
           description: Order created
     put:
-      summary: Update a stock when executed
+      summary: Update the status of a stock when executed
       requestBody:
         description: the order to change
         content:

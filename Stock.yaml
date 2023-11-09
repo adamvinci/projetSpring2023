@@ -1,0 +1,96 @@
+openapi: 3.0.3
+info:
+  title: Wallet Vinci Stock eXchange Service
+  description: Microservice handling the wallet of the investors
+  version: 1.0.0
+servers:
+  - url: 'https'
+paths:
+
+  /stock/{email}:
+    parameters:
+      - name: email
+        in: path
+        description: Email of the investor
+        required: true
+        schema:
+          type: string
+          example: investor@hotmail.com
+
+    get:
+      summary: Read one wallet
+      responses:
+        404:
+          description: Wallet not found
+        200:
+          description: Wallet returned
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/wallet'
+    post:
+      summary: Add stocks in the wallet
+      requestBody:
+        description: Stocks to add
+        required: true
+        content:
+          'application/json':
+            schema:
+                 $ref: '#/components/schemas/wallet'
+      responses:
+        200:
+          description: The wallet has been updated
+        404:
+          description: Wallet not found
+    put:
+      summary: Modify the quantity of stocks
+      requestBody:
+        description: Stock to modify
+        required: true
+        content:
+          'application/json':
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: The stock name
+                    pattern: '^[A-Z]{4}$'
+                  quantity:
+                    type: number
+                    description: The new quantity of stocks
+                  operationType:
+                    type: string
+                    enum:
+                      - sale
+                      - purchase
+                    description: Type of operation
+      responses:
+        200:
+          description: The wallet has been updated
+        404:
+          description: Wallet not found
+
+
+components:
+  schemas:
+    wallet:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email of the investor
+        name:
+          type: string
+          description: The stock name
+          pattern: '^[A-Z]{4}$'
+        quantity:
+          type: number
+          description: The quantity of stocks
+      example:
+        email: investor@hotmail.com
+        name: LNRD
+        quantity: 500
+

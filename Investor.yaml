@@ -7,15 +7,7 @@ servers:
   - url: 'https'
 paths:
 
-  /users/{email}:
-    parameters:
-      - name: email
-        in: path
-        schema:
-          type: string
-        example: investor@hotmail.com
-        description: Email of the user
-
+  /users:
     post:
       summary: Create a user
       requestBody:
@@ -25,12 +17,38 @@ paths:
             schema:
               $ref: '#/components/schemas/user'
       responses:
-        400:
-          description: Email does not match or user invalid
         409:
           description: Email already used
         201:
           description: User created
+
+
+  /users/{email}:
+    parameters:
+      - name: email
+        in: path
+        schema:
+          type: string
+        example: investor@hotmail.com
+        description: Email of the user
+    post:
+      summary: Add cash
+      requestBody:
+        description: new amount of cash
+        required: true
+        content:
+          'application/json':
+            schema:
+              type: object
+              properties:
+                money:
+                  type: number
+                  description: The amount of cash to add/remove
+      responses:
+        404:
+          description: Investor not found
+        200:
+          description: Amount of cash updated
 
     put:
       summary: Update a user
@@ -47,6 +65,7 @@ paths:
           description: Email not found
         200:
           description: User updated
+
 
     delete:
       summary: Delete a user
