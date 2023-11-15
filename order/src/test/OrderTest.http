@@ -1,0 +1,91 @@
+
+
+### Read all
+GET http://localhost:9001/order
+
+### Create order with good params
+POST http://localhost:9001/order
+Content-Type: application/json
+
+{
+  "owner": "Cat4Life",
+  "ticker": "AAFL",
+  "quantity": 4,
+  "type": "MARKET",
+  "side": "BUY"
+}
+
+
+### Create order with bad ticker params >4
+POST http://localhost:9001/order
+Content-Type: application/json
+
+{
+  "owner": "Cat4Life",
+  "ticker": "AAFLX",
+  "quantity": 4,
+  "type": "MARKET",
+  "side": "BUY"
+}
+
+### Create order with bad quantity params
+POST http://localhost:9001/order
+Content-Type: application/json
+
+{
+  "owner": "Cat4Life",
+  "ticker": "AAFL",
+  "quantity": -1,
+  "type": "MARKET",
+  "side": "BUY"
+}
+
+### Create order with bad type params
+POST http://localhost:9001/order
+Content-Type: application/json
+
+{
+  "owner": "Cat4Life",
+  "ticker": "AAFL",
+  "quantity": 4,
+  "type": "MARKE",
+  "side": "BUY"
+}
+### Create order with bad side params >4
+POST http://localhost:9001/order
+Content-Type: application/json
+
+{
+  "owner": "Cat4Life",
+  "ticker": "AAFL",
+  "quantity": 4,
+  "type": "MARKET",
+  "side": "BU"
+}
+### Create order with no limit and LIMIT type
+POST http://localhost:9001/order
+Content-Type: application/json
+
+{
+  "owner": "Cat4Life",
+  "ticker": "AAFL",
+  "quantity": 4,
+  "type": "LIMIT",
+  "side": "BUY"
+}
+### Read one existing guid
+GET http://localhost:9001/order/93093941-2433-4d57-8f3d-094f1c52e6f3
+
+### Read one non-existing guid
+GET http://localhost:9001/order/719b1b63-86f9-4c2f-b0f6-edf98baf2b87
+###
+PUT http://localhost:9001/order/e2bb457c-d11a-40aa-8ec7-5f71bb255ba1
+Content-Type: application/json
+
+3
+
+### Read order by user
+GET http://localhost:9001/order/by-user/Cat4Life
+
+### Read order by ticker and side
+GET http://localhost:9001/order/open/by-ticker/AAFL/BUY
