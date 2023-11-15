@@ -15,8 +15,13 @@ import jakarta.persistence.Id;
 @Entity(name = "order")
 public class Order {
     @Id
+    @Column(nullable = true)
+    private String guid;
+
     @Column(nullable = false)
-    private String hash;
+    private String owner;
+
+
 
 
 }
