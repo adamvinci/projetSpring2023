@@ -47,7 +47,8 @@ public class Order {
   /*
   Can be null so we use Double instead of double
    */
-    private Number limite;
+  @Column(name = "quantity_limit")
+  private Number limit;
 
     /*
     Not null dans la DB parce que valeur par default est de 0 vu qu'on utilise int

@@ -20,7 +20,7 @@ public class OrderService {
   }
 
   public boolean createOne(Order order) {
-      if (order.getType() == OrderType.LIMIT && order.getLimite() == null) {
+      if (order.getType() == OrderType.LIMIT && order.getLimit() == null) {
           return false;
       }
     orderRepository.save(order);

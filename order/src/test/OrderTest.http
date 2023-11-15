@@ -14,7 +14,23 @@ Content-Type: application/json
   "type": "MARKET",
   "side": "BUY"
 }
+> {% client.global.set("guid", response.body.guid);%}
 
+### Read one existing guid
+GET http://localhost:9001/order/{{guid}}
+
+### Change the quantity of an order
+PUT http://localhost:9001/order/{{guid}}
+Content-Type: application/json
+
+3
+
+
+### Read order by user
+GET http://localhost:9001/order/by-user/Cat4Life
+
+### Read order by ticker and side
+GET http://localhost:9001/order/open/by-ticker/AAFL/BUY
 
 ### Create order with bad ticker params >4
 POST http://localhost:9001/order
@@ -73,19 +89,8 @@ Content-Type: application/json
   "type": "LIMIT",
   "side": "BUY"
 }
-### Read one existing guid
-GET http://localhost:9001/order/93093941-2433-4d57-8f3d-094f1c52e6f3
 
 ### Read one non-existing guid
 GET http://localhost:9001/order/719b1b63-86f9-4c2f-b0f6-edf98baf2b87
-###
-PUT http://localhost:9001/order/e2bb457c-d11a-40aa-8ec7-5f71bb255ba1
-Content-Type: application/json
 
-3
 
-### Read order by user
-GET http://localhost:9001/order/by-user/Cat4Life
-
-### Read order by ticker and side
-GET http://localhost:9001/order/open/by-ticker/AAFL/BUY
