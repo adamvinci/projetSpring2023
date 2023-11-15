@@ -9,10 +9,12 @@
         <outputRelativeToContentRoot value="true" />
         <module name="execute" />
         <module name="eureka" />
+        <module name="authentification" />
         <module name="order" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="authentification" target="17" />
       <module name="eureka" target="17" />
       <module name="execute" target="17" />
       <module name="order" target="17" />
@@ -20,6 +22,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="authentification" options="-parameters" />
       <module name="eureka" options="-parameters" />
       <module name="execute" options="-parameters" />
       <module name="order" options="-parameters" />
