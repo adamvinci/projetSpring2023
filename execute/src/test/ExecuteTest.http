@@ -1,19 +1,4 @@
-### Execute with good params
-POST http://localhost:9002/execute/AAFL/Cat4Life/Cat3Life
-Content-Type: application/json
-
-{
-  "ticker": "AAFL",
-  "seller": "Cat4Life",
-  "buyer": "Cat3Life",
-  "buy_order_guid": "1851aeae-dba9-49f9-a917-4144797c9633",
-  "sell_order_guid": "a68b4e2f-6680-4421-9204-ca6b55d008da",
-  "quantity": "4",
-  "price": "10"
-}
-
-
-### Create order with good params
+### Create sell order
 POST http://localhost:9001/order
 Content-Type: application/json
 
@@ -24,10 +9,10 @@ Content-Type: application/json
   "type": "MARKET",
   "side": "SELL"
 }
-> {% client.global.set("guid", response.body.guid);%}
+> {% client.global.set("guidsell", response.body.guid);%}
 
 
-### Create order with good params
+### Create buy order
 POST http://localhost:9001/order
 Content-Type: application/json
 
@@ -38,16 +23,30 @@ Content-Type: application/json
   "type": "MARKET",
   "side": "BUY"
 }
-> {% client.global.set("guid2", response.body.guid);%}
+> {% client.global.set("guidbuy", response.body.guid);%}
 
-### Read one existing guid
-GET http://localhost:9001/order/{{guid}}
+### Execute with good params
+POST http://localhost:9002/execute/AAFL/Cat4Life/Cat3Life
+Content-Type: application/json
 
-### Read one existing guid
-GET http://localhost:9001/order/{{guid2}}
+{
+  "ticker": "AAFL",
+  "seller": "Cat4Life",
+  "buyer": "Cat3Life",
+  "buy_order_guid": "{{guidbuy}}",
+  "sell_order_guid": "{{guidsell}}",
+  "quantity": "4",
+  "price": "10"
+}
+
+### Verify buy order
+GET http://localhost:9001/order/{{guidbuy}}
+
+### Verify sell order
+GET http://localhost:9001/order/{{guidsell}}
 
 
-
+--------------------------------------------------------------------BAD_REQUEST TEST----------------------------------------------------------
 
 ### Execute with bad seller params
 POST http://localhost:9002/execute/AAFL/Cat4Lif/Cat3Life

@@ -1,9 +1,6 @@
 
 
-### Read all
-GET http://localhost:9001/order
-
-### Create order with good params
+### Create a buy order
 POST http://localhost:9001/order
 Content-Type: application/json
 
@@ -16,7 +13,7 @@ Content-Type: application/json
 }
 > {% client.global.set("guid", response.body.guid);%}
 
-### Read one existing guid
+### Read the created order
 GET http://localhost:9001/order/{{guid}}
 
 ### Change the quantity of an order
@@ -25,12 +22,13 @@ Content-Type: application/json
 
 3
 
-
 ### Read order by user
 GET http://localhost:9001/order/by-user/Cat4Life
 
 ### Read order by ticker and side
 GET http://localhost:9001/order/open/by-ticker/AAFL/BUY
+
+--------------------------------------------------------------------BAD_REQUEST TEST----------------------------------------------------------
 
 ### Create order with bad ticker params >4
 POST http://localhost:9001/order

@@ -10,6 +10,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients
 public class ExecuteApplication {
 
+    /**
+     * Entry point of the order execute application
+     * @param args Command line arguments passed to the application.
+     */
     public static void main(String[] args) {
         SpringApplication.run(ExecuteApplication.class, args);
     }
