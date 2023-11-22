@@ -1,5 +1,6 @@
 package be.vinci.ipl.vsx;
 
+import be.vinci.ipl.vsx.models.FilledQuantity;
 import be.vinci.ipl.vsx.models.Order;
 import be.vinci.ipl.vsx.models.Order.OrderSide;
 import org.springframework.http.HttpStatus;
@@ -50,10 +51,10 @@ public class OrderController {
      * @return NOT_FOUND if the guid does not exist or OK if the order is successfully updated
      */
     @PutMapping("/order/{guid}")
-    public ResponseEntity<Void> updateOne(@PathVariable String guid,@RequestBody Integer filled){
+    public ResponseEntity<Void> updateOne(@PathVariable String guid,@RequestBody FilledQuantity filled){
         Order order = orderService.readOne(guid);
         if(order == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        orderService.changeQuantity(order,filled);
+        orderService.changeQuantity(order,filled.getFilled());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

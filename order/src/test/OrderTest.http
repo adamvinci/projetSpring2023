@@ -16,21 +16,31 @@ Content-Type: application/json
 ### Read the created order
 GET http://localhost:9001/order/{{guid}}
 
+### Read order by ticker and side before filled
+GET http://localhost:9001/order/open/by-ticker/AAFL/BUY
+
 ### Change the quantity of an order
 PUT http://localhost:9001/order/{{guid}}
 Content-Type: application/json
 
-3
+{
+  "filled": 4
+}
 
-### Read order by user
-GET http://localhost:9001/order/by-user/Cat4Life
-
-### Read order by ticker and side
+### Read order by ticker and side after filled (should return empty list)
 GET http://localhost:9001/order/open/by-ticker/AAFL/BUY
 
---------------------------------------------------------------------BAD_REQUEST TEST----------------------------------------------------------
+### Read order with existing user
+GET http://localhost:9001/order/by-user/Cat4Life
 
-### Create order with bad ticker params >4
+### Read order with no existing user
+GET http://localhost:9001/order/by-user/444
+
+
+
+--------------------------------------------------------------------BAD_REQUEST/NOT_FOUND TEST---------------------------------------------------------------------------------
+
+### Create order with bad ticker params.length >4
 POST http://localhost:9001/order
 Content-Type: application/json
 
@@ -89,6 +99,6 @@ Content-Type: application/json
 }
 
 ### Read one non-existing guid
-GET http://localhost:9001/order/719b1b63-86f9-4c2f-b0f6-edf98baf2b87
+GET http://localhost:9001/order/7
 
 

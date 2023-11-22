@@ -66,10 +66,6 @@ public class OrderService {
     return orderRepository.findByOwner(username);
   }
   public Iterable<Order> readByTickerAndSide(String ticker, OrderSide side){
-    Iterable<Order> allOrders = orderRepository.findByTickerAndSide(ticker, side);
-
-    return StreamSupport.stream(allOrders.spliterator(), false)
-        .filter(order -> order.getQuantity() > order.getFilled())
-        .collect(Collectors.toList());
+    return orderRepository.findByTickerAndSide(ticker, side);
   }
 }
