@@ -30,7 +30,7 @@ public class PriceServiceImpl implements PriceService {
    * @return Le dernier prix de l'instrument correspondant au ticker.
    */
   @Override
-  public Double getLastPriceByTicker(String ticker) {
+  public Number getLastPriceByTicker(String ticker) {
     Instrument instrument = instrumentRepository.findById(ticker).orElse(null);
     return instrument != null ? instrument.getPrice() : null;
   }
@@ -41,7 +41,7 @@ public class PriceServiceImpl implements PriceService {
    * @param newPrice Le nouveau prix à mettre à jour.
    */
   @Override
-  public void updatePriceByTicker(String ticker, Double newPrice) {
+  public void updatePriceByTicker(String ticker, Number newPrice) {
     Instrument instrument = instrumentRepository.findById(ticker).orElse(null);
     if (instrument != null) {
       instrument.setPrice(newPrice);

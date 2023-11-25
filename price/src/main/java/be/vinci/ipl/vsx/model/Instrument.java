@@ -17,6 +17,6 @@ import lombok.ToString;
 public class Instrument {
   @Id
   private String ticker;
-  private double price;
+  private Number price;
 
 }

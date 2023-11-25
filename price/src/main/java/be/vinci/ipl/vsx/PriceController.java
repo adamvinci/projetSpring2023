@@ -28,10 +28,10 @@ public class PriceController {
    */
   @GetMapping("/{ticker}")
   public ResponseEntity<Double> getLastPrice(@PathVariable String ticker) {
-    Double lastPrice = priceService.getLastPriceByTicker(ticker);
+    Number lastPrice = priceService.getLastPriceByTicker(ticker);
 
     if (lastPrice != null) {
-      return ResponseEntity.ok(lastPrice);
+      return ResponseEntity.ok(lastPrice.doubleValue());
     } else {
       // Initialisation du prix selon les spécifications
       if ("CASH".equals(ticker)) {
@@ -54,16 +54,16 @@ public class PriceController {
    * @return Réponse indiquant si le prix a été mis à jour ou s'il a été ajouté comme un nouvel instrument.
    */
   @PatchMapping("/{ticker}")
-  public ResponseEntity<String> updatePrice(@PathVariable String ticker, @RequestBody Double newPrice) {
+  public ResponseEntity<String> updatePrice(@PathVariable String ticker, @RequestBody Number newPrice) {
     if ("CASH".equals(ticker)) {
       return ResponseEntity.badRequest().body("Impossible de mettre à jour le prix du CASH");
     }
     // Vérifie si le ticker existe déjà dans la base de données
-    Double existingPrice = priceService.getLastPriceByTicker(ticker);
+    Number existingPrice = priceService.getLastPriceByTicker(ticker);
 
     if (existingPrice != null) {
       // Le ticker existe, met à jour le prix
-      if (newPrice < 0) {
+      if (newPrice.doubleValue() < 0) {
         return ResponseEntity.badRequest().body("Le prix n'était pas valide (négatif)");
       }
       priceService.updatePriceByTicker(ticker, newPrice);

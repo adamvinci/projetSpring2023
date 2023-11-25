@@ -1,4 +1,4 @@
-package be.vinci.ipl.vsx.matching;
+package be.vinci.ipl.vsx;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
