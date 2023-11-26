@@ -14,7 +14,6 @@ public interface OrderRepository extends CrudRepository<Order, String> {
 
   /**
    * Retrieve a list of orders by owner.
-   *
    * @param owner The owner's username
    * @return list of orders for the specified owner (potentially empty).
    */
@@ -22,7 +21,6 @@ public interface OrderRepository extends CrudRepository<Order, String> {
 
   /**
    * Retrieve a list of orders by ticker and order side.
-   *
    * @param ticker The ticker alphanumeric code
    * @param side   The side of the orders to list (buy or sell orders).
    * @return list of orders

@@ -22,7 +22,6 @@ public class ExecuteController {
 
   /**
    * Endpoint to execute a financial transaction between a seller and a buyer for a specific stock.
-   *
    * @param ticker      The Stock alphanumeric code
    * @param seller      The username of the investor selling the stocks
    * @param buyer       The username of the investor buying the stocks

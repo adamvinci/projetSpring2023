@@ -23,7 +23,6 @@ public class OrderService {
 
   /**
    * Create a new order saves it to the data store and send it to matching microservice.
-   *
    * @param order to create
    * @return true if the order is created, false if the order type is limit and there is no limit
    * price
@@ -39,7 +38,6 @@ public class OrderService {
 
   /**
    * Reads a order in repository
-   *
    * @param guid Guid of the order being reviewed
    * @return The order, or null if the order couldn't be found
    */
@@ -49,7 +47,6 @@ public class OrderService {
 
   /**
    * Changes the filled quantity of an existing order and save it .
-   *
    * @param order  The order to be updated.
    * @param filled The new quantity to be filled for the order
    */
@@ -65,7 +62,6 @@ public class OrderService {
 
   /**
    * Reads all orders from a user
-   *
    * @param username Username of the user
    * @return The list of order from this user (potentially empty)
    */
@@ -74,7 +70,7 @@ public class OrderService {
   }
 
   /**
-   *
+   * Reads all open orders corresponding to the side and ticker
    * @param ticker The name of the order to read.
    * @param side The subset of open orders to list (buy or sell orders)
    * @return The list of asked open order

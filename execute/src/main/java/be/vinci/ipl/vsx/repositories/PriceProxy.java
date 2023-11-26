@@ -13,7 +13,6 @@ public interface PriceProxy {
 
   /**
    * Price service endpoint to update price of the ticker
-   *
    * @param ticker The name of the order to update.
    * @param newPrice The last price at which the stock has been sold.
    * @return OK if the price is updated or BAD_REQUEST if the price is not valid

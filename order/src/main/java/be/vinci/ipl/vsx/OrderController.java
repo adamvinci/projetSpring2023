@@ -21,7 +21,6 @@ public class OrderController {
 
   /**
    * Endpoint to place an order on the platform
-   *
    * @param order the order to be placed
    * @return BAD_REQUEST if the order is invalid or CREATED if the order is successfully placed
    */
@@ -40,7 +39,6 @@ public class OrderController {
 
   /**
    * Endpoint to retrieve details of a specific order by its GUID.
-   *
    * @param guid The GUID of the specific order to retrieve details.
    * @return NOT_FOUND if the guid does not exist or OK if the order is successfully retrieved
    */
@@ -56,14 +54,12 @@ public class OrderController {
 
   /**
    * Endpoint to update the filled quantity of an order based on its GUID.
-   *
    * @param guid   The GUID of the order to update.
    * @param filled The  quantity of shares that have already been traded for this order.
    * @return NOT_FOUND if the guid does not exist or OK if the order is successfully updated
    */
   @PutMapping("/order/{guid}")
-  public ResponseEntity<Void> updateOne(@PathVariable String guid,
-      @RequestBody FilledQuantity filled) {
+  public ResponseEntity<Void> updateOne(@PathVariable String guid, @RequestBody FilledQuantity filled) {
     Order order = orderService.readOne(guid);
       if (order == null) {
           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -74,7 +70,6 @@ public class OrderController {
 
   /**
    * Endpoint to retrieve all orders placed by a specific investor.
-   *
    * @param username The username of the investor.
    * @return OK with a potentially empty list
    */
@@ -86,7 +81,6 @@ public class OrderController {
 
   /**
    * Endpoint to retrieve all open orders for a specific ticker and order side.
-   *
    * @param ticker The ticker alphanumeric code
    * @param side   The side of the orders to list (buy or sell orders).
    * @return list of orders

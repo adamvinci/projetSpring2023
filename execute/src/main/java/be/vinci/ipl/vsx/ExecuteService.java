@@ -29,7 +29,6 @@ public class ExecuteService {
    * Contact the order service to update the order status Contact the price service to update the
    * stock price Contact the wallet service to update the quantity of stock/cash possessed by the
    * buyer and seller
-   *
    * @param transaction the transaction which has been executed
    */
   public void executeTransaction(Transaction transaction) {
