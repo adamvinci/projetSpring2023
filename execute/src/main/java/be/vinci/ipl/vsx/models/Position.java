@@ -6,7 +6,6 @@ import lombok.Setter;
 
 
 public class Position {
-
   private String ticker;
   private int quantity;
   private Number unitValue;
@@ -16,6 +15,5 @@ public class Position {
     this.quantity = quantity;
     this.unitValue = unitValue;
   }
-
 
 }

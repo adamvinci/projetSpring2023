@@ -15,7 +15,7 @@ public interface MatchingProxy {
   /**
    * Try to find a match between order.
    *
-   * @param ticker The GUID of the order to match.
+   * @param ticker The name of the order to match.
    * @param order  The order to match
    * @return OK if the operation went well
    */

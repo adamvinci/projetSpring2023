@@ -13,7 +13,6 @@ import lombok.ToString;
 @Setter
 @ToString
 @NoArgsConstructor
-
 public class Transaction {
 
   /**
@@ -57,8 +56,7 @@ public class Transaction {
    */
   public boolean invalid() {
     return seller == null || seller.isBlank() || buyer == null || buyer.isBlank() ||
-        buy_order_guid == null || buy_order_guid.isBlank() || sell_order_guid == null
-        || sell_order_guid.isBlank() ||
+        buy_order_guid == null || buy_order_guid.isBlank() || sell_order_guid == null || sell_order_guid.isBlank() ||
         ticker == null || ticker.isBlank() || ticker.length() > 4 ||
         quantity <= 0 || price == null || price.doubleValue() <= 0;
   }

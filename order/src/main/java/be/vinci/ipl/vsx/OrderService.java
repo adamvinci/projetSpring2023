@@ -73,6 +73,12 @@ public class OrderService {
     return orderRepository.findByOwner(username);
   }
 
+  /**
+   *
+   * @param ticker The name of the order to read.
+   * @param side The subset of open orders to list (buy or sell orders)
+   * @return The list of asked open order
+   */
   public Iterable<Order> readByTickerAndSide(String ticker, OrderSide side) {
     return orderRepository.findByTickerAndSide(ticker, side);
   }
