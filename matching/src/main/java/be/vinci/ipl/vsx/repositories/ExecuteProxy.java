@@ -23,7 +23,7 @@ public interface ExecuteProxy {
    * @return BAD_REQUEST if the provided transaction details are invalid or OK if the transaction is successfully executed.
    */
   @PostMapping("/execute/{ticker}/{seller}/{buyer}")
-  public ResponseEntity<Void> executeTransaction(@PathVariable String ticker,
+  ResponseEntity<Void> executeTransaction(@PathVariable String ticker,
       @PathVariable String seller, @PathVariable String buyer,@RequestBody Transaction transaction);
 
 }

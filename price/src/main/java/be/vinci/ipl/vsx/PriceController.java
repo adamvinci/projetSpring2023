@@ -3,11 +3,11 @@ package be.vinci.ipl.vsx;
 import be.vinci.ipl.vsx.model.Instrument;
 import be.vinci.ipl.vsx.service.PriceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/price")
 public class PriceController {
 
 
@@ -26,7 +26,7 @@ public class PriceController {
    * @param ticker Le ticker de l'instrument.
    * @return Le dernier prix de l'instrument correspondant au ticker.
    */
-  @GetMapping("/{ticker}")
+  @GetMapping("/price/{ticker}")
   public ResponseEntity<Double> getLastPrice(@PathVariable String ticker) {
     Number lastPrice = priceService.getLastPriceByTicker(ticker);
 
@@ -53,10 +53,10 @@ public class PriceController {
    * @param newPrice Le nouveau prix à mettre à jour.
    * @return Réponse indiquant si le prix a été mis à jour ou s'il a été ajouté comme un nouvel instrument.
    */
-  @PatchMapping("/{ticker}")
-  public ResponseEntity<String> updatePrice(@PathVariable String ticker, @RequestBody Number newPrice) {
+  @PatchMapping("/price/{ticker}")
+  public ResponseEntity<Void> updatePrice(@PathVariable String ticker, @RequestBody Number newPrice) {
     if ("CASH".equals(ticker)) {
-      return ResponseEntity.badRequest().body("Impossible de mettre à jour le prix du CASH");
+      return new ResponseEntity <>(HttpStatus.BAD_REQUEST);
     }
     // Vérifie si le ticker existe déjà dans la base de données
     Number existingPrice = priceService.getLastPriceByTicker(ticker);
@@ -64,17 +64,17 @@ public class PriceController {
     if (existingPrice != null) {
       // Le ticker existe, met à jour le prix
       if (newPrice.doubleValue() < 0) {
-        return ResponseEntity.badRequest().body("Le prix n'était pas valide (négatif)");
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
       }
       priceService.updatePriceByTicker(ticker, newPrice);
-      return ResponseEntity.ok("Le prix a été mis à jour");
+      return new ResponseEntity<>(HttpStatus.OK);
     } else {
       // Le ticker n'existe pas, crée un nouvel instrument avec le prix spécifié
       Instrument newInstrument = new Instrument();
       newInstrument.setTicker(ticker);
       newInstrument.setPrice(newPrice);
       priceService.addInstrument(newInstrument);
-      return ResponseEntity.ok("Le nouvel instrument avec le prix a été ajouté à la base de données");
+      return new ResponseEntity<>(HttpStatus.OK);
     }
   }
 

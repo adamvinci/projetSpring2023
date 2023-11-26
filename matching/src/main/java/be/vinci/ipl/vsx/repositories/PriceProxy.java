@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Repository
-@FeignClient(name = "price")
+@FeignClient(name = "price-service")
 public interface PriceProxy {
 
   @GetMapping("/price/{ticker}")

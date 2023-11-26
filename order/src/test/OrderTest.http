@@ -1,0 +1,104 @@
+
+
+### Create a buy order
+POST http://localhost:9001/order
+Content-Type: application/json
+
+{
+  "owner": "Cat4Life",
+  "ticker": "AAFL",
+  "quantity": 4,
+  "type": "MARKET",
+  "side": "BUY"
+}
+> {% client.global.set("guid", response.body.guid);%}
+
+### Read the created order
+GET http://localhost:9001/order/{{guid}}
+
+### Read order by ticker and side before filled
+GET http://localhost:9001/order/open/by-ticker/AAFL/BUY
+
+### Change the quantity of an order
+PUT http://localhost:9001/order/{{guid}}
+Content-Type: application/json
+
+{
+  "filled": 4
+}
+
+### Read order by ticker and side after filled (should return empty list)
+GET http://localhost:9001/order/open/by-ticker/AAFL/BUY
+
+### Read order with existing user
+GET http://localhost:9001/order/by-user/Cat4Life
+
+### Read order with no existing user
+GET http://localhost:9001/order/by-user/444
+
+
+
+--------------------------------------------------------------------BAD_REQUEST/NOT_FOUND TEST---------------------------------------------------------------------------------
+
+### Create order with bad ticker params.length >4
+POST http://localhost:9001/order
+Content-Type: application/json
+
+{
+  "owner": "Cat4Life",
+  "ticker": "AAFLX",
+  "quantity": 4,
+  "type": "MARKET",
+  "side": "BUY"
+}
+
+### Create order with bad quantity params
+POST http://localhost:9001/order
+Content-Type: application/json
+
+{
+  "owner": "Cat4Life",
+  "ticker": "AAFL",
+  "quantity": -1,
+  "type": "MARKET",
+  "side": "BUY"
+}
+
+### Create order with bad type params
+POST http://localhost:9001/order
+Content-Type: application/json
+
+{
+  "owner": "Cat4Life",
+  "ticker": "AAFL",
+  "quantity": 4,
+  "type": "MARKE",
+  "side": "BUY"
+}
+### Create order with bad side params >4
+POST http://localhost:9001/order
+Content-Type: application/json
+
+{
+  "owner": "Cat4Life",
+  "ticker": "AAFL",
+  "quantity": 4,
+  "type": "MARKET",
+  "side": "BU"
+}
+### Create order with no limit and LIMIT type
+POST http://localhost:9001/order
+Content-Type: application/json
+
+{
+  "owner": "Cat4Life",
+  "ticker": "AAFL",
+  "quantity": 4,
+  "type": "LIMIT",
+  "side": "BUY"
+}
+
+### Read one non-existing guid
+GET http://localhost:9001/order/7
+
+

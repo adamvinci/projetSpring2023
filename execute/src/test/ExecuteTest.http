@@ -1,0 +1,146 @@
+### Create sell order
+POST http://localhost:9001/order
+Content-Type: application/json
+
+{
+  "owner": "Cat4Life",
+  "ticker": "AAFL",
+  "quantity": 6,
+  "type": "MARKET",
+  "side": "SELL"
+}
+> {% client.global.set("guidsell", response.body.guid);%}
+
+
+### Create buy order
+POST http://localhost:9001/order
+Content-Type: application/json
+
+{
+  "owner": "Cat3Life",
+  "ticker": "AAFL",
+  "quantity": 4,
+  "type": "MARKET",
+  "side": "BUY"
+}
+> {% client.global.set("guidbuy", response.body.guid);%}
+
+### Execute with good params
+POST http://localhost:9002/execute/AAFL/Cat4Life/Cat3Life
+Content-Type: application/json
+
+{
+  "ticker": "AAFL",
+  "seller": "Cat4Life",
+  "buyer": "Cat3Life",
+  "buy_order_guid": "{{guidbuy}}",
+  "sell_order_guid": "{{guidsell}}",
+  "quantity": "4",
+  "price": "10"
+}
+
+### Verify buy order (filled)
+GET http://localhost:9001/order/{{guidbuy}}
+
+### Verify sell order (filled)
+GET http://localhost:9001/order/{{guidsell}}
+
+### Verify that the price has been updated (should be 10)
+GET https://localhost:9003/price/AAFL
+
+### Verify the buyer cash
+GET http://localhost:9005/wallet/Cat3Life
+
+### Verify the buyer position
+GET http://localhost:9005/wallet/Cat3Life/net-worth
+
+### Verify the seller cash
+GET http://localhost:9005/wallet/Cat4Life
+
+### Verify the seller position
+GET http://localhost:9005/wallet/Cat4Life/net-worth
+
+
+--------------------------------------------------------------------BAD_REQUEST TEST----------------------------------------------------------
+
+### Execute with bad seller params
+POST http://localhost:9002/execute/AAFL/Cat4Lif/Cat3Life
+Content-Type: application/json
+
+{
+  "ticker": "AAFL",
+  "seller": "Cat4Life",
+  "buyer": "Cat3Life",
+  "buy_order_guid": "1851aeae-dba9-49f9-a917-4144797c9633",
+  "sell_order_guid": "a68b4e2f-6680-4421-9204-ca6b55d008da",
+  "quantity": "4",
+  "price": "10"
+}
+### Execute with same buyer and seller
+POST http://localhost:9002/execute/AAFL/Cat4Life/Cat4Life
+Content-Type: application/json
+
+{
+  "ticker": "AAFL",
+  "seller": "Cat4Life",
+  "buyer": "Cat4Life",
+  "buy_order_guid": "1851aeae-dba9-49f9-a917-4144797c9633",
+  "sell_order_guid": "a68b4e2f-6680-4421-9204-ca6b55d008da",
+  "quantity": "4",
+  "price": "10"
+}
+
+### Execute with bad buyer params
+POST http://localhost:9002/execute/AAFL/Cat4Life/Cat3Lif
+Content-Type: application/json
+
+{
+  "ticker": "AAFL",
+  "seller": "Cat4Life",
+  "buyer": "Cat3Life",
+  "buy_order_guid": "1851aeae-dba9-49f9-a917-4144797c9633",
+  "sell_order_guid": "a68b4e2f-6680-4421-9204-ca6b55d008da",
+  "quantity": "4",
+  "price": "10"
+}
+### Execute with bad ticker params
+POST http://localhost:9002/execute/AAFL/Cat4Life/Cat3Life
+Content-Type: application/json
+
+{
+  "ticker": "AAF",
+  "seller": "Cat4Life",
+  "buyer": "Cat3Life",
+  "buy_order_guid": "1851aeae-dba9-49f9-a917-4144797c9633",
+  "sell_order_guid": "a68b4e2f-6680-4421-9204-ca6b55d008da",
+  "quantity": "4",
+  "price": "10"
+}
+
+### Execute with bad  price
+POST http://localhost:9002/execute/AAFL/Cat4Life/Cat3Life
+Content-Type: application/json
+
+{
+  "ticker": "AAFL",
+  "seller": "Cat4Life",
+  "buyer": "Cat3Life",
+  "buy_order_guid": "1851aeae-dba9-49f9-a917-4144797c9633",
+  "sell_order_guid": "a68b4e2f-6680-4421-9204-ca6b55d008da",
+  "quantity": "4",
+  "price": "-5"
+}
+
+### Execute with bad quantity params
+POST http://localhost:9002/execute/AAFL/Cat4Life/Cat3Life
+Content-Type: application/json
+
+{
+  "ticker": "AAFL",
+  "seller": "Cat4Life",
+  "buyer": "Cat3Life",
+  "buy_order_guid": "1851aeae-dba9-49f9-a917-4144797c9633",
+  "sell_order_guid": "a68b4e2f-6680-4421-9204-ca6b55d008da",
+  "quantity": "-5",
+  "price": "10"
+}

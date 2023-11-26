@@ -15,20 +15,27 @@ public class MatchingService {
 
   private final PriceProxy priceProxy;
   private final ExecuteProxy executeProxy;
+  private final List<Order> buyOrders=new ArrayList<>();
+  private final List<Order> sellOrders=new ArrayList<>();
 
   public MatchingService(PriceProxy priceProxy, ExecuteProxy executeProxy) {
     this.priceProxy = priceProxy;
     this.executeProxy = executeProxy;
   }
 
-  private List<Order> buyOrders=new ArrayList<>();
-  private List<Order> sellOrders=new ArrayList<>();
 
 
-  public Boolean excuteOrder(Order order){
-    if(buyOrders.contains(order)||sellOrders.contains(order))return false;
-    Transaction transaction=matchOrder(order);
-    if(transaction!=null)executeProxy.executeTransaction(transaction.getTicker(),transaction.getSeller(),transaction.getBuyer(),transaction);
+
+  public Boolean executeOrder(Order order){
+    if(buyOrders.contains(order) || sellOrders.contains(order)) {
+      return false;
+    }
+    System.out.println("taille buy:"+buyOrders.size());
+    System.out.println("taille sell:"+sellOrders.size());
+    Transaction transaction = matchOrder(order);
+    if(transaction != null) {
+      executeProxy.executeTransaction(transaction.getTicker(), transaction.getSeller(), transaction.getBuyer(), transaction);
+    }
     return true;
   }
 
@@ -59,6 +66,7 @@ public class MatchingService {
          matchedOrderTransaction.setBuy_order_guid(buyOrder.getGuid());
          matchedOrderTransaction.setSell_order_guid(order.getGuid());
          matchedOrderTransaction.setTicker(buyOrder.getTicker());
+         if(buyOrder.getQuantity()==0)
          buyOrders.remove(buyOrder);
          break;
        }
@@ -97,7 +105,7 @@ public class MatchingService {
           //LIMIT et SELL
 
           if((sellOrder.getLimit().intValue() <= buyOrder.getLimit().intValue())){
-            sellOrder.setQuantity(qnt);
+            sellOrder.setFilled(sellOrder.getQuantity()-qnt);
             transaction.setQuantity(buyOrder.getQuantity());
             Number soustraction=buyOrder.getLimit().doubleValue()-sellOrder.getLimit().doubleValue();
             Number price=sellOrder.getLimit().doubleValue()+(soustraction.doubleValue()/2);

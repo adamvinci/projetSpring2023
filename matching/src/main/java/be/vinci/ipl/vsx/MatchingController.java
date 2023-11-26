@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/trigger")
 public class MatchingController {
 
   private final MatchingService matchingService;
@@ -20,18 +19,18 @@ public class MatchingController {
   public MatchingController(MatchingService matchingService) {
     this.matchingService = matchingService;
   }
-  @PostMapping("/{ticker}")
+  @PostMapping("/trigger/{ticker}")
   public ResponseEntity<String> triggerMatching(@PathVariable String ticker, @RequestBody Order order) {
     // Vérification si l'ordre reçu est valide
     if (order==null) {
-      return ResponseEntity.badRequest().body("Ordre invalide");
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
     // Vérification si l'ordre reçu existe et execution de l'ordre
-    if(!matchingService.excuteOrder(order)){
-      return ResponseEntity.badRequest().body("Ordre existant");
+    if(!matchingService.executeOrder(order)){
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    return ResponseEntity.ok("L'algorithme de matching s'est correctement déroulé.");
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 
 }
