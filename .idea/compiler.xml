@@ -12,6 +12,7 @@
         <module name="eureka" />
         <module name="price" />
         <module name="order" />
+        <module name="matching" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
