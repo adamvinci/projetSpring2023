@@ -39,7 +39,6 @@ public class ExecuteService {
     // Calculate the total price of the order
     Number totalPrice = transaction.getQuantity() * transaction.getPrice().doubleValue();
     int totalPriceAsInt = (int) -totalPrice.intValue();
-
     //Update buyer wallet
     Position positionBuyerTicker = new Position(transaction.getTicker(), transaction.getQuantity(),
         transaction.getPrice());

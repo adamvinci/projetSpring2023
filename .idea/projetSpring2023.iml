@@ -6,8 +6,6 @@
       <sourceFolder url="file://$MODULE_DIR$/execute/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/order/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/matching/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/price/src" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/wallet" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

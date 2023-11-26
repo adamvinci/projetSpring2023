@@ -14,11 +14,10 @@ import org.springframework.stereotype.Service;
 public class OrderService {
 
   private final OrderRepository orderRepository;
-  private final MatchingProxy matchingProxy;
+//  private final MatchingProxy matchingProxy;
 
-  public OrderService(OrderRepository orderRepository, MatchingProxy matchingProxy) {
+  public OrderService(OrderRepository orderRepository ) {
     this.orderRepository = orderRepository;
-    this.matchingProxy = matchingProxy;
   }
 
   /**
@@ -32,7 +31,7 @@ public class OrderService {
       return false;
     }
     orderRepository.save(order);
-    matchingProxy.triggerMatching(order.getTicker(), order);
+   // matchingProxy.triggerMatching(order.getTicker(), order);
     return true;
   }
 

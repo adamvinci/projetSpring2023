@@ -19,6 +19,5 @@ public interface WalletProxy {
    * @return the content of the new wallet
    */
   @PostMapping("/wallet/{username}")
-  List<Position> addPositions(@PathVariable String username,
-      @RequestBody List<Position> newPositions);
+  List<Position> addPositions(@PathVariable String username, @RequestBody List<Position> newPositions);
 }
