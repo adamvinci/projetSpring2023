@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface PriceProxy {
 
     /**
-     * Order service endpoint to update the filled quantity of an order based on its GUID.
+     * Price service endpoint to update price of the ticker
      * @param ticker The GUID of the order to update.
      * @param newPrice The last price at which the stock has been sold.
      * @return OK if the price is updated or BAD_REQUEST if the price is not valid

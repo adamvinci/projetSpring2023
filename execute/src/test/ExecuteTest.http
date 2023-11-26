@@ -39,26 +39,26 @@ Content-Type: application/json
   "price": "10"
 }
 
-### Verify buy order (filled)
+### Verify buy order (filled should be 4)
 GET http://localhost:9001/order/{{guidbuy}}
 
-### Verify sell order (filled)
+### Verify sell order (filled should be 4)
 GET http://localhost:9001/order/{{guidsell}}
 
 ### Verify that the price has been updated (should be 10)
-GET https://localhost:9003/price/AAFL
+GET http://localhost:9003/price/AAFL
 
-### Verify the buyer cash
-GET http://localhost:9005/wallet/Cat3Life
-
-### Verify the buyer position
+### Verify the buyer cash (should be -40)
 GET http://localhost:9005/wallet/Cat3Life/net-worth
 
-### Verify the seller cash
-GET http://localhost:9005/wallet/Cat4Life
+### Verify the buyer position (should be 4 AAFL)
+GET http://localhost:9005/wallet/Cat3Life
 
-### Verify the seller position
+### Verify the seller cash (should be 40)
 GET http://localhost:9005/wallet/Cat4Life/net-worth
+
+### Verify the seller position (should be -4 AAFL)
+GET http://localhost:9005/wallet/Cat4Life
 
 
 --------------------------------------------------------------------BAD_REQUEST TEST----------------------------------------------------------
