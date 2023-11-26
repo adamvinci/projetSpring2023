@@ -14,10 +14,12 @@ public interface WalletProxy {
 
   /**
    * Wallet service endpoint to update the wallet of a buyer/seller
-   * @param username of the owner of the wallet to update
+   *
+   * @param username     of the owner of the wallet to update
    * @param newPositions new list of positions
    * @return the content of the new wallet
    */
   @PostMapping("/wallet/{username}")
-  List<Position> addPositions(@PathVariable String username, @RequestBody List<Position> newPositions);
+  List<Position> addPositions(@PathVariable String username,
+      @RequestBody List<Position> newPositions);
 }

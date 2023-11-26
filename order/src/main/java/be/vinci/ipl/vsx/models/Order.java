@@ -88,6 +88,7 @@ public class Order {
 
   /**
    * Checks whether the current instance represents an invalid order.
+   *
    * @return true if the order instance is invalid or false if valid
    */
   public boolean invalid() {

@@ -49,14 +49,17 @@ public class Transaction {
    * Price at which the transaction was determined.
    */
   private Number price;
+
   /**
    * Checks whether the current instance represents an invalid financial transaction.
+   *
    * @return true if the financial instance is invalid or false if valid
    */
   public boolean invalid() {
-    return seller == null || seller.isBlank() ||buyer == null || buyer.isBlank() ||
-        buy_order_guid == null || buy_order_guid.isBlank() ||sell_order_guid == null || sell_order_guid.isBlank() ||
-        ticker == null || ticker.isBlank() || ticker.length()>4 ||
-        quantity <=0 || price == null || price.doubleValue()<=0 ;
+    return seller == null || seller.isBlank() || buyer == null || buyer.isBlank() ||
+        buy_order_guid == null || buy_order_guid.isBlank() || sell_order_guid == null
+        || sell_order_guid.isBlank() ||
+        ticker == null || ticker.isBlank() || ticker.length() > 4 ||
+        quantity <= 0 || price == null || price.doubleValue() <= 0;
   }
 }
