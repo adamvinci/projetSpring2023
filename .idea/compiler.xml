@@ -11,6 +11,10 @@
         <module name="demo" />
         <module name="eureka" />
         <module name="price" />
+<<<<<<< HEAD
+=======
+        <module name="matching" />
+>>>>>>> 668380f857b3f91b3aa3da0994cec6f50cfc7a07
         <module name="order" />
         <module name="matching" />
       </profile>
