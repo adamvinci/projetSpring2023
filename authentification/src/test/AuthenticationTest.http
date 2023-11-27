@@ -1,0 +1,38 @@
+### Create safeCredentials
+POST http://localhost:9007/authentication/Test1
+Content-Type: application/json
+
+{
+  "username": "Test1",
+  "password": "PW1"
+}
+
+### Update safeCredentials
+PUT http://localhost:9007/authentication/Test1
+Content-Type: application/json
+
+{
+  "username": "Test1",
+  "password": "Password1"
+}
+
+### Connect user
+POST http://localhost:9007/authentication/connect
+Content-Type: application/json
+
+{
+  "username": "Test1",
+  "password": "Password1"
+}
+
+
+### Verify token
+POST http://localhost:9007/authentication/verify
+Content-Type: application/json
+
+{
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJhdXRoMCIsInVzZXJuYW1lIjoiVGVzdDEifQ.3xUp87h-ZtubuknruaMmZ0XYKk7_byQy6m2U46nRqUxDhKQeBCbIopEsfZnasPg3mb4uuR7yE99L_ObcEUIcWQ"
+}
+
+### Delete safeCredentials
+DELETE http://localhost:9007/authentication/Test1
