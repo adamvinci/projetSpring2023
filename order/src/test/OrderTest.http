@@ -20,7 +20,7 @@ GET http://localhost:9001/order/{{guid}}
 GET http://localhost:9001/order/open/by-ticker/AAFL/BUY
 
 ### Change the quantity of an order
-PUT http://localhost:9001/order/{{guid}}
+PATCH http://localhost:9001/order/{{guid}}
 Content-Type: application/json
 
 {

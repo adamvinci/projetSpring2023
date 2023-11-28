@@ -58,7 +58,7 @@ public class OrderController {
    * @param filled The  quantity of shares that have already been traded for this order.
    * @return NOT_FOUND if the guid does not exist or OK if the order is successfully updated
    */
-  @PutMapping("/order/{guid}")
+  @PatchMapping("/order/{guid}")
   public ResponseEntity<Void> updateOne(@PathVariable String guid, @RequestBody FilledQuantity filled) {
     Order order = orderService.readOne(guid);
       if (order == null) {
