@@ -9,8 +9,21 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PositionDTO {
 
+
+    /**
+     * Ticker symbol representing the position.
+     */
     private String ticker;
+
+    /**
+     * Quantity of the asset held in the position.
+     */
     private double quantity;
+
+    
+    /**
+     * Unit value of the asset.
+     */
     private Number unitValue;
 
 

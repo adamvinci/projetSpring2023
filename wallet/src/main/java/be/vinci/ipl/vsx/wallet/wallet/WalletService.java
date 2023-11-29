@@ -18,14 +18,24 @@ public class WalletService {
     private final WalletRepository walletRepository;
     private final PriceProxy priceProxy;
 
-    //private List<Position> walletPositions;
-
-    public WalletService(WalletRepository walletRepository , PriceProxy priceProxy) {
+    /**
+     * Constructor for WalletService.
+     *
+     * @param walletRepository The repository for interacting with the database.
+     * @param priceProxy       The proxy for retrieving asset prices.
+     */
+    public WalletService(WalletRepository walletRepository, PriceProxy priceProxy) {
         this.walletRepository = walletRepository;
         this.priceProxy = priceProxy;
-        //walletPositions = new ArrayList<>();
     }
 
+
+    /**
+     * Retrieves all positions in the user's wallet.
+     *
+     * @param username The username associated with the wallet.
+     * @return List of PositionDTO representing all positions in the user's wallet.
+     */
     public List<PositionDTO> getAllPositions(String username) {
         List<Position> walletPositions = walletRepository.findByUsername(username);
 
@@ -34,12 +44,18 @@ public class WalletService {
         }
 
 
-
         return walletPositions.stream()
                 .map(this::toPositionDTO)
                 .collect(Collectors.toList());
     }
 
+
+    /**
+     * Retrieves open positions in the user's wallet.
+     *
+     * @param username The username associated with the wallet.
+     * @return List of PositionDTO representing open positions in the user's wallet.
+     */
     public List<PositionDTO> getOpenPositions(String username) {
         List<Position> walletPositions = walletRepository.findByUsername(username);
 
@@ -49,10 +65,18 @@ public class WalletService {
 
 
         return walletPositions.stream()
-                .filter(p -> p.getQuantity()>0)
+                .filter(p -> p.getQuantity() > 0)
                 .map(this::toPositionDTO)
                 .collect(Collectors.toList());
     }
+
+
+    /**
+     * Calculates the net worth of the user's wallet.
+     *
+     * @param username The username associated with the wallet.
+     * @return The net worth of the user's wallet.
+     */
     public double calculateNetWorth(String username) {
         List<Position> walletPositions = walletRepository.findByUsername(username);
 
@@ -70,6 +94,14 @@ public class WalletService {
         return netWorth;
     }
 
+
+    /**
+     * Adds new positions to the user's wallet.
+     *
+     * @param username     The username associated with the wallet.
+     * @param newPositions List of positions to be added to the wallet.
+     * @return List of PositionDTO representing the updated list of positions in the user's wallet.
+     */
     @Transactional
     public List<PositionDTO> addPositions(String username, List<Position> newPositions) {
         List<Position> walletPositions = walletRepository.findByUsername(username);
@@ -109,11 +141,8 @@ public class WalletService {
                 newPosition.setUsername(username);
                 walletPositions.add(newPosition);
 
-
             }
         }
-        // Ajoute une position "CASH" s'il n'existe pas encore
-
         walletRepository.saveAll(walletPositions);
 
         return walletPositions.stream()
@@ -121,6 +150,13 @@ public class WalletService {
                 .collect(Collectors.toList());
     }
 
+
+    /**
+     * Converts a Position entity to a PositionDTO.
+     *
+     * @param position The Position entity to be converted.
+     * @return PositionDTO representing the converted position.
+     */
     private PositionDTO toPositionDTO(Position position) {
         PositionDTO positionDTO = new PositionDTO();
         positionDTO.setTicker(position.getTicker());
@@ -128,7 +164,6 @@ public class WalletService {
         positionDTO.setUnitValue(priceProxy.getLastPriceByTicker(position.getTicker()));
         return positionDTO;
     }
-
 
 
 }

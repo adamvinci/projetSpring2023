@@ -14,16 +14,26 @@ import lombok.ToString;
 @Entity
 public class Position {
 
-    //position = titre avec quantite
-
+    /**
+     * Unique identifier for the position.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * Username associated with the position.
+     */
     private String username;
 
-    //@Column(unique = true)
+    /**
+     * Ticker symbol representing the position.
+     */
     private String ticker;
+
+    /**
+     * Quantity of the asset held in the position.
+     */
     private double quantity;
 
 
