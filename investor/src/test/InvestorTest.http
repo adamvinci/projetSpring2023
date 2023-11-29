@@ -1,6 +1,6 @@
 
 ### Create an user
-POST http://localhost:9006/investor
+POST http://localhost:9006/investor/testuser
 Content-Type: application/json
 
 {
@@ -13,7 +13,7 @@ Content-Type: application/json
 
 
 ### create second investor
-POST http://localhost:9006/investor
+POST http://localhost:9006/investor/billy
 Content-Type: application/json
 
 {
@@ -29,7 +29,7 @@ GET http://localhost:9006/investor/readAll
 
 
 ### read one by username
-GET http://localhost:9006/investor/testuser
+GET http://localhost:9006/investor/billy
 
 
 ### update one investor by username
@@ -46,5 +46,5 @@ Content-Type: application/json
 
 
 ### delete one investor by username
-DELETE http://localhost:9006/investor/testuser
+DELETE http://localhost:9006/investor/billy
 
