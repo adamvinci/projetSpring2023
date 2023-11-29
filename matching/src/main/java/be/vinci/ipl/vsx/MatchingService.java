@@ -36,42 +36,43 @@ public class MatchingService {
     if(transaction != null) {
       executeProxy.executeTransaction(transaction.getTicker(), transaction.getSeller(), transaction.getBuyer(), transaction);
     }
+    System.out.println(transaction);
     return true;
   }
 
   private Transaction matchOrder(Order order) {
     boolean match=false;
     Transaction matchedOrderTransaction=new Transaction();
-   if(order.getSide().equals(OrderSide.BUY)){
-     for (Order sellOrder:sellOrders) {
-       match=isMatch(sellOrder,order,matchedOrderTransaction);
-       if(match){
-         matchedOrderTransaction.setSeller(sellOrder.getOwner());
-         matchedOrderTransaction.setBuyer(order.getOwner());
-         matchedOrderTransaction.setBuy_order_guid(order.getGuid());
-         matchedOrderTransaction.setSell_order_guid(sellOrder.getGuid());
-         matchedOrderTransaction.setTicker(sellOrder.getTicker());
+    if(order.getSide().equals(OrderSide.BUY)){
+      for (Order sellOrder:sellOrders) {
+        match=isMatch(sellOrder,order,matchedOrderTransaction);
+        if(match){
+          matchedOrderTransaction.setSeller(sellOrder.getOwner());
+          matchedOrderTransaction.setBuyer(order.getOwner());
+          matchedOrderTransaction.setBuy_order_guid(order.getGuid());
+          matchedOrderTransaction.setSell_order_guid(sellOrder.getGuid());
+          matchedOrderTransaction.setTicker(sellOrder.getTicker());
 
-         if(sellOrder.getQuantity()==0)
-         sellOrders.remove(sellOrder);
-         break;
-       }
-     }
-   }else{
-     for (Order buyOrder:buyOrders) {
-       match=isMatch(buyOrder,order,matchedOrderTransaction);
-       if (match){
-         matchedOrderTransaction.setSeller(order.getOwner());
-         matchedOrderTransaction.setBuyer(buyOrder.getOwner());
-         matchedOrderTransaction.setBuy_order_guid(buyOrder.getGuid());
-         matchedOrderTransaction.setSell_order_guid(order.getGuid());
-         matchedOrderTransaction.setTicker(buyOrder.getTicker());
-         if(buyOrder.getQuantity()==0)
-         buyOrders.remove(buyOrder);
-         break;
-       }
-     }
-   }
+          if(sellOrder.getQuantity()==0)
+            sellOrders.remove(sellOrder);
+          break;
+        }
+      }
+    }else{
+      for (Order buyOrder:buyOrders) {
+        match=isMatch(buyOrder,order,matchedOrderTransaction);
+        if (match){
+          matchedOrderTransaction.setSeller(order.getOwner());
+          matchedOrderTransaction.setBuyer(buyOrder.getOwner());
+          matchedOrderTransaction.setBuy_order_guid(buyOrder.getGuid());
+          matchedOrderTransaction.setSell_order_guid(order.getGuid());
+          matchedOrderTransaction.setTicker(buyOrder.getTicker());
+          if(buyOrder.getQuantity()==0)
+            buyOrders.remove(buyOrder);
+          break;
+        }
+      }
+    }
     if (!match) {
       if (order.getSide().equals(OrderSide.BUY)) {
         buyOrders.add(order);
@@ -84,8 +85,10 @@ public class MatchingService {
   }
 
   private boolean isMatch(Order actualOrder, Order orderToMatch, Transaction transaction) {
-
-    if(actualOrder.getTicker()!=orderToMatch.getTicker())return false;
+    System.out.println("actual: "+actualOrder.getTicker());
+    System.out.println("order: "+orderToMatch.getTicker());
+    if(!actualOrder.getTicker().equals(orderToMatch.getTicker()))return false;
+    System.out.println("lekker");
     Order buyOrder=null;
     Order sellOrder=null;
     if(actualOrder.getSide().equals(OrderSide.BUY)){
@@ -97,45 +100,46 @@ public class MatchingService {
     }
 
     int qnt=sellOrder.getQuantity()-buyOrder.getQuantity();
+
     if(qnt<0)return false;
 
-      if(buyOrder.getType().equals(OrderType.LIMIT)){
-        //LIMIT et BUY
-        if(sellOrder.getType().equals(OrderType.LIMIT)){
-          //LIMIT et SELL
+    if(buyOrder.getType().equals(OrderType.LIMIT)){
+      //LIMIT et BUY
+      if(sellOrder.getType().equals(OrderType.LIMIT)){
+        //LIMIT et SELL
 
-          if((sellOrder.getLimit().intValue() <= buyOrder.getLimit().intValue())){
-            sellOrder.setFilled(sellOrder.getQuantity()-qnt);
-            transaction.setQuantity(buyOrder.getQuantity());
-            Number soustraction=buyOrder.getLimit().doubleValue()-sellOrder.getLimit().doubleValue();
-            Number price=sellOrder.getLimit().doubleValue()+(soustraction.doubleValue()/2);
-            transaction.setPrice(price);
-            return true;
-          }
-        } else{
-          //MARKET et SELL
-          sellOrder.setQuantity(qnt);
+        if((sellOrder.getLimit().intValue() <= buyOrder.getLimit().intValue())){
+          sellOrder.setFilled(sellOrder.getQuantity()-qnt);
           transaction.setQuantity(buyOrder.getQuantity());
-          transaction.setPrice(buyOrder.getLimit());
-          return true;
-
-        }
-      }else {
-        //MARKET et BUY
-        if(sellOrder.getType().equals(OrderType.LIMIT)){
-          //LIMIT et SELL
-          sellOrder.setQuantity(qnt);
-          transaction.setQuantity(buyOrder.getQuantity());
-          transaction.setPrice(sellOrder.getLimit());
-          return true;
-        } else{
-          //MARKET et SELL je pense avoir besoin du price
-          sellOrder.setQuantity(qnt);
-          transaction.setQuantity(buyOrder.getQuantity());
-          transaction.setPrice(priceProxy.getLastPrice(buyOrder.getTicker()));
+          Number soustraction=buyOrder.getLimit().doubleValue()-sellOrder.getLimit().doubleValue();
+          Number price=sellOrder.getLimit().doubleValue()+(soustraction.doubleValue()/2);
+          transaction.setPrice(price);
           return true;
         }
+      } else{
+        //MARKET et SELL
+        sellOrder.setQuantity(qnt);
+        transaction.setQuantity(buyOrder.getQuantity());
+        transaction.setPrice(buyOrder.getLimit());
+        return true;
+
       }
+    }else {
+      //MARKET et BUY
+      if(sellOrder.getType().equals(OrderType.LIMIT)){
+        //LIMIT et SELL
+        sellOrder.setQuantity(qnt);
+        transaction.setQuantity(buyOrder.getQuantity());
+        transaction.setPrice(sellOrder.getLimit());
+        return true;
+      } else{
+        //MARKET et SELL je pense avoir besoin du price
+        sellOrder.setQuantity(qnt);
+        transaction.setQuantity(buyOrder.getQuantity());
+        transaction.setPrice(priceProxy.getLastPrice(buyOrder.getTicker()));
+        return true;
+      }
+    }
 
     return false;
   }

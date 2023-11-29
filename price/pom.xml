@@ -31,7 +31,11 @@
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
     </dependency>
-
+    <dependency>
+      <artifactId>feign-hc5</artifactId>
+      <groupId>io.github.openfeign</groupId>
+      <version>13.1</version>
+    </dependency>
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>

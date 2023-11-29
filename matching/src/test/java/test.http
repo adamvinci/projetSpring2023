@@ -34,13 +34,13 @@ POST http://localhost:9004/trigger/AAPL
 Content-Type: application/json
 
 {
-"guid": "91011",
+"guid": "9101",
 "owner": "Charlie",
 "ticker": "AAPL",
-"quantity": 150,
+"quantity": 100,
 "type": "LIMIT",
 "side": "SELL",
-"limit": 160.0,
+"limit": 140.0,
 "filled": 0
 }
 
