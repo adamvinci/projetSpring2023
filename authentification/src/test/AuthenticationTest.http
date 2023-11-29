@@ -31,7 +31,7 @@ POST http://localhost:9007/authentication/verify
 Content-Type: application/json
 
 {
-  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJhdXRoMCIsInVzZXJuYW1lIjoiVGVzdDEifQ.3xUp87h-ZtubuknruaMmZ0XYKk7_byQy6m2U46nRqUxDhKQeBCbIopEsfZnasPg3mb4uuR7yE99L_ObcEUIcWQ"
+  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJhdXRoMCIsInVzZXJuYW1lIjoiVGVzdDEifQ._Ma8eJ9fNHu4nmEkhmC30vKOVJcxgtArBk6HS87w1gFmKCchCPeEabPyo8OFPDC_kBV0D2Y9siCFE40MnHJ4hQ"
 }
 
 ### Delete safeCredentials
