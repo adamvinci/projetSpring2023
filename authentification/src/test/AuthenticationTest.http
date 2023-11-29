@@ -30,9 +30,7 @@ Content-Type: application/json
 POST http://localhost:9007/authentication/verify
 Content-Type: application/json
 
-{
-  "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJhdXRoMCIsInVzZXJuYW1lIjoiVGVzdDEifQ._Ma8eJ9fNHu4nmEkhmC30vKOVJcxgtArBk6HS87w1gFmKCchCPeEabPyo8OFPDC_kBV0D2Y9siCFE40MnHJ4hQ"
-}
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJhdXRoMCIsInVzZXJuYW1lIjoiVGVzdDEifQ._Ma8eJ9fNHu4nmEkhmC30vKOVJcxgtArBk6HS87w1gFmKCchCPeEabPyo8OFPDC_kBV0D2Y9siCFE40MnHJ4hQ
 
 ### Delete safeCredentials
 DELETE http://localhost:9007/authentication/Test1
