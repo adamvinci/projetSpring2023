@@ -1,8 +1,8 @@
 package be.vinci.ipl.vsx;
 
 import be.vinci.ipl.vsx.models.Order;
-import be.vinci.ipl.vsx.models.Order.OrderSide;
-import be.vinci.ipl.vsx.models.Order.OrderType;
+import be.vinci.ipl.vsx.models.OrderSide;
+import be.vinci.ipl.vsx.models.OrderType;
 import be.vinci.ipl.vsx.repositories.MatchingProxy;
 import be.vinci.ipl.vsx.repositories.OrderRepository;
 import org.springframework.stereotype.Service;
