@@ -36,7 +36,7 @@ Content-Type: application/json
 
 
 ### add positions in an investor wallet
-POST http://localhost:9005/wallet/testuser
+POST http://localhost:9005/wallet/billy
 Content-Type: application/json
 
 [
@@ -52,11 +52,11 @@ Content-Type: application/json
 
 
 ### net worth of an investor
-GET http://localhost:9005/wallet/testuser/net-worth
+GET http://localhost:9005/wallet/billy/net-worth
 
 
 ### get all open positions
-GET http://localhost:9005/testuser/positions
+GET http://localhost:9005/billy/positions
 
 ### get all positions
 GET http://localhost:9005/testuser/all-positions
