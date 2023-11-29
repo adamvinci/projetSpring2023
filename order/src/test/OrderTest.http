@@ -20,7 +20,7 @@ GET http://localhost:9001/order/{{guid}}
 GET http://localhost:9001/order/open/by-ticker/AAFL/BUY
 
 ### Change the quantity of an order
-PUT http://localhost:9001/order/{{guid}}
+PATCH http://localhost:9001/order/{{guid}}
 Content-Type: application/json
 
 {
@@ -34,10 +34,6 @@ GET http://localhost:9001/order/open/by-ticker/AAFL/BUY
 
 ### Read order with existing user
 GET http://localhost:9001/order/by-user/Cat4Life
-
-### Read order with no existing user
-GET http://localhost:9001/order/by-user/444
-
 
 
 --------------------------------------------------------------------BAD_REQUEST/NOT_FOUND TEST---------------------------------------------------------------------------------
@@ -102,5 +98,8 @@ Content-Type: application/json
 
 ### Read one non-existing guid
 GET http://localhost:9001/order/7
+
+### Read order with no existing user
+GET http://localhost:9001/order/by-user/444
 
 
