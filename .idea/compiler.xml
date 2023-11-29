@@ -9,25 +9,19 @@
         <outputRelativeToContentRoot value="true" />
         <module name="investor" />
         <module name="eureka" />
-<<<<<<< HEAD
         <module name="authentification" />
-=======
         <module name="price" />
         <module name="demo (1) (be.vinci.ipl.vsx.investor)" />
         <module name="execute" />
         <module name="demo" />
->>>>>>> 664b94798012c1d5973d0d200b46bc06af64e012
         <module name="order" />
         <module name="matching" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-<<<<<<< HEAD
       <module name="authentification" target="17" />
-=======
       <module name="demo" target="17" />
       <module name="demo (1) (be.vinci.ipl.vsx.investor)" target="17" />
->>>>>>> 664b94798012c1d5973d0d200b46bc06af64e012
       <module name="eureka" target="17" />
       <module name="execute" target="17" />
       <module name="investor" target="17" />
@@ -38,12 +32,9 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-<<<<<<< HEAD
       <module name="authentification" options="-parameters" />
-=======
       <module name="demo" options="-parameters" />
       <module name="demo (1) (be.vinci.ipl.vsx.investor)" options="-parameters" />
->>>>>>> 664b94798012c1d5973d0d200b46bc06af64e012
       <module name="eureka" options="-parameters" />
       <module name="execute" options="-parameters" />
       <module name="investor" options="-parameters" />
