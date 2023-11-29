@@ -1,0 +1,29 @@
+### Test GET pour obtenir le dernier prix pour un ticker existant ###
+GET http://localhost:9003/price/AAPL
+
+### Test GET pour obtenir le dernier prix pour un ticker inexistant (doit initialiser le prix à 1) ###
+GET http://localhost:9003/price/XYZ
+
+### Test PATCH pour mettre à jour le prix pour un ticker existant ###
+PATCH http://localhost:9003/price/AAPL
+Content-Type: application/json
+
+10.0
+
+### Test PATCH pour mettre à jour le prix pour un ticker inexistant ###
+PATCH http://localhost:9003/price/GOOGL
+Content-Type: application/json
+
+5.0
+
+### Test PATCH pour essayer de mettre à jour le prix du CASH (ne devrait pas être autorisé) ###
+PATCH http://localhost:9003/price/CASH
+Content-Type: application/json
+
+8.0
+
+### Test PATCH pour essayer de mettre à jour le prix avec une valeur négative (ne devrait pas être autorisé) ###
+PATCH http://localhost:9003/price/AAPL
+Content-Type: application/json
+
+-5.0
