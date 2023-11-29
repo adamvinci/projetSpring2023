@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/authentification/authentication.iml" filepath="$PROJECT_DIR$/authentification/authentication.iml" />
       <module fileurl="file://$PROJECT_DIR$/authentification/authentification.iml" filepath="$PROJECT_DIR$/authentification/authentification.iml" />
       <module fileurl="file://$PROJECT_DIR$/wallet/demo.iml" filepath="$PROJECT_DIR$/wallet/demo.iml" />
       <module fileurl="file://$PROJECT_DIR$/investor/demo (1) (be.vinci.ipl.vsx.investor).iml" filepath="$PROJECT_DIR$/investor/demo (1) (be.vinci.ipl.vsx.investor).iml" />
