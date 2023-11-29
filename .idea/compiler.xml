@@ -7,20 +7,18 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="execute" />
-        <module name="demo" />
         <module name="eureka" />
         <module name="price" />
-<<<<<<< HEAD
-=======
-        <module name="matching" />
->>>>>>> 668380f857b3f91b3aa3da0994cec6f50cfc7a07
+        <module name="demo (1) (be.vinci.ipl.vsx.investor)" />
+        <module name="execute" />
+        <module name="demo" />
         <module name="order" />
         <module name="matching" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="demo" target="17" />
+      <module name="demo (1) (be.vinci.ipl.vsx.investor)" target="17" />
       <module name="eureka" target="17" />
       <module name="execute" target="17" />
       <module name="matching" target="17" />
@@ -31,6 +29,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="demo" options="-parameters" />
+      <module name="demo (1) (be.vinci.ipl.vsx.investor)" options="-parameters" />
       <module name="eureka" options="-parameters" />
       <module name="execute" options="-parameters" />
       <module name="matching" options="-parameters" />

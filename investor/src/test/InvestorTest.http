@@ -1,0 +1,50 @@
+
+### Create an user
+POST http://localhost:9006/investor
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "testuser@example.com",
+  "firstname": "John",
+  "lastname": "Doe",
+  "birthdate": "1990-01-01"
+}
+
+
+### create second investor
+POST http://localhost:9006/investor
+Content-Type: application/json
+
+{
+  "username": "billy",
+  "email": "billy@example.com",
+  "firstname": "bilal",
+  "lastname": "Doe",
+  "birthdate": "1990-01-01"
+}
+
+### read all
+GET http://localhost:9006/investor/readAll
+
+
+### read one by username
+GET http://localhost:9006/investor/testuser
+
+
+### update one investor by username
+PUT http://localhost:9006/investor/testuser
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "updateduser@example.com",
+  "firstname": "Updated",
+  "lastname": "User",
+  "birthdate": "1990-01-01"
+}
+
+
+### delete one investor by username
+DELETE http://localhost:9006/investor/testuser
+
