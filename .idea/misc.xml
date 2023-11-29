@@ -9,8 +9,7 @@
         <option value="$PROJECT_DIR$/execute/pom.xml" />
         <option value="$PROJECT_DIR$/order/pom.xml" />
         <option value="$PROJECT_DIR$/wallet/pom.xml" />
-        <option value="$PROJECT_DIR$/price/pom.xml" />
-        <option value="$PROJECT_DIR$/matching/pom.xml" />
+        <option value="$PROJECT_DIR$/investor/pom.xml" />
       </list>
     </option>
   </component>

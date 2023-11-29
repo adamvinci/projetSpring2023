@@ -2,24 +2,16 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/eureka/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eureka/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/execute/src/main/java" charset="UTF-8" />
-<<<<<<< HEAD
-    <file url="file://$PROJECT_DIR$/matching/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/matching/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/order/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/price/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/price/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/wallet/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/wallet/src/main/resources" charset="UTF-8" />
-=======
-    <file url="file://$PROJECT_DIR$/execute/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/investor/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/investor/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/matching/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/matching/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/price/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/price/src/main/resources" charset="UTF-8" />
->>>>>>> 668380f857b3f91b3aa3da0994cec6f50cfc7a07
+    <file url="file://$PROJECT_DIR$/wallet/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/wallet/src/main/resources" charset="UTF-8" />
   </component>
 </project>

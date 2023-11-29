@@ -1,0 +1,64 @@
+### Create an user
+POST http://localhost:9006/investor
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "testuser@example.com",
+  "firstname": "John",
+  "lastname": "Doe",
+  "birthdate": "1990-01-01"
+}
+
+### create second user
+POST http://localhost:9006/investor
+Content-Type: application/json
+
+{
+"username": "billy",
+"email": "testuser@example.com",
+"firstname": "John",
+"lastname": "Doe",
+"birthdate": "1990-01-01"
+}
+
+### net worth of an investor
+GET http://localhost:9005/wallet/testuser/net-worth
+
+
+### get wallet
+GET http://localhost:9005/billy
+
+
+### get investor
+GET http://localhost:9006/investor/billy
+
+### get last price of AAPL
+GET http://localhost:9003/price/AAPL
+
+### get last price of XYZ
+GET http://localhost:9003/price/XYZ
+
+### Test PATCH
+PATCH http://localhost:9003/price/AAPL
+Content-Type: application/json
+
+3
+
+### add positions in an investor wallet
+POST http://localhost:9005/wallet/testuser
+Content-Type: application/json
+
+[
+  {
+    "ticker": "AAPL",
+    "quantity": 5
+  },
+  {
+    "ticker": "XYZ",
+    "quantity": 1
+  }
+]
+
+### get all positions
+GET http://localhost:9005/testuser/positions
