@@ -20,12 +20,14 @@ GET http://localhost:9001/order/{{guid}}
 GET http://localhost:9001/order/open/by-ticker/AAFL/BUY
 
 ### Change the quantity of an order
-PUT http://localhost:9001/order/{{guid}}
+PATCH http://localhost:9001/order/{{guid}}
 Content-Type: application/json
 
 {
   "filled": 4
 }
+### Read the created order (filled should be 4)
+GET http://localhost:9001/order/{{guid}}
 
 ### Read order by ticker and side after filled (should return empty list)
 GET http://localhost:9001/order/open/by-ticker/AAFL/BUY

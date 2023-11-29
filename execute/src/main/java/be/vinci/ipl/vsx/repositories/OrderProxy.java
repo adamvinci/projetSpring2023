@@ -1,8 +1,10 @@
 package be.vinci.ipl.vsx.repositories;
 
+import be.vinci.ipl.vsx.models.FilledQuantity;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +22,6 @@ public interface OrderProxy {
    * @param filled The quantity of shares that have already been traded for this order.
    * @return NOT_FOUND if the guid does not exist or OK if the order is successfully updated
    */
-  @PutMapping("/order/{guid}")
-  ResponseEntity<Void> updateOne(@PathVariable String guid,@RequestBody Integer filled);
+  @PatchMapping("/order/{guid}")
+  ResponseEntity<Void> updateOne(@PathVariable String guid, @RequestBody FilledQuantity filled);
 }
