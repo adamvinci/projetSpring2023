@@ -21,11 +21,6 @@ Content-Type: application/json
 "lastname": "Doe",
 "birthdate": "1990-01-01"
 }
-
-### net worth of an investor
-GET http://localhost:9005/wallet/billy/net-worth
-
-
 ### get last price of AAPL
 GET http://localhost:9003/price/AAPL
 
@@ -38,6 +33,7 @@ PATCH http://localhost:9003/price/AAPL
 Content-Type: application/json
 
 3
+
 
 ### add positions in an investor wallet
 POST http://localhost:9005/wallet/testuser
@@ -54,11 +50,17 @@ Content-Type: application/json
   }
 ]
 
+
+### net worth of an investor
+GET http://localhost:9005/wallet/testuser/net-worth
+
+
 ### get all open positions
 GET http://localhost:9005/testuser/positions
 
 ### get all positions
 GET http://localhost:9005/testuser/all-positions
+
 
 
 
