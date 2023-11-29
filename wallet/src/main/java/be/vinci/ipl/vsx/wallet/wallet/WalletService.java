@@ -3,7 +3,7 @@ package be.vinci.ipl.vsx.wallet.wallet;
 import be.vinci.ipl.vsx.wallet.wallet.data.PriceProxy;
 import be.vinci.ipl.vsx.wallet.wallet.data.WalletRepository;
 import be.vinci.ipl.vsx.wallet.wallet.models.Position;
-import be.vinci.ipl.vsx.wallet.wallet.models.Wallet;
+import be.vinci.ipl.vsx.wallet.wallet.models.PositionDTO;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -18,110 +18,119 @@ public class WalletService {
     private final WalletRepository walletRepository;
     private final PriceProxy priceProxy;
 
+    //private List<Position> walletPositions;
+
     public WalletService(WalletRepository walletRepository , PriceProxy priceProxy) {
         this.walletRepository = walletRepository;
         this.priceProxy = priceProxy;
-
+        //walletPositions = new ArrayList<>();
     }
 
+    public List<PositionDTO> getAllPositions(String username) {
+        List<Position> walletPositions = walletRepository.findByUsername(username);
 
-
-    public List<Position> getOpenPositions(String username) {
-        Wallet wallet = walletRepository.findByUsername(username);
-
-        if (wallet == null) {
+        if (walletPositions == null || walletPositions.isEmpty()) {
             return Collections.emptyList();
         }
 
-        List<Position> openPositions = wallet.getPositions().stream()
-                .filter(position -> position.getQuantity() > 0)
+
+
+        return walletPositions.stream()
+                .map(this::toPositionDTO)
                 .collect(Collectors.toList());
+    }
 
-        wallet.setPositions(openPositions);
+    public List<PositionDTO> getOpenPositions(String username) {
+        List<Position> walletPositions = walletRepository.findByUsername(username);
 
-        return openPositions;
+        if (walletPositions == null || walletPositions.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+
+        return walletPositions.stream()
+                .filter(p -> p.getQuantity()>0)
+                .map(this::toPositionDTO)
+                .collect(Collectors.toList());
     }
     public double calculateNetWorth(String username) {
+        List<Position> walletPositions = walletRepository.findByUsername(username);
 
-        Wallet wallet = walletRepository.findByUsername(username);
-
-        if (wallet == null) {
+        if (walletPositions == null || walletPositions.isEmpty()) {
             return 0.0;
         }
 
-        List<Position> openPositions = getOpenPositions(username);
-
-        wallet.setPositions(openPositions);
-
-        double netWorth = openPositions.stream()
+        double netWorth = walletPositions.stream()
                 .mapToDouble(position -> {
                     Number lastPrice = priceProxy.getLastPriceByTicker(position.getTicker());
                     return position.getQuantity() * lastPrice.doubleValue();
                 })
                 .sum();
 
-        wallet.setNetWorth(netWorth);
-
         return netWorth;
     }
 
     @Transactional
-    public List<Position> addPositions(String username, List<Position> newPositions) {
+    public List<PositionDTO> addPositions(String username, List<Position> newPositions) {
+        List<Position> walletPositions = walletRepository.findByUsername(username);
 
-        Wallet existingWallet = walletRepository.findByUsername(username);
-
-        if (existingWallet == null) {
-            existingWallet = new Wallet();
-            existingWallet.setUsername(username);
-            existingWallet.setPositions(new ArrayList<>());
-
+        if (walletPositions == null) {
+            walletPositions = new ArrayList<>();
         }
 
-        List<Position> existingPositions = existingWallet.getPositions();
-
+        Position cashPosition = null;
+        for (Position position : walletPositions) {
+            if (position.getTicker().equalsIgnoreCase("CASH")) {
+                cashPosition = position;
+                break;
+            }
+        }
+        if (cashPosition == null) {
+            cashPosition = new Position();
+            cashPosition.setUsername(username);
+            cashPosition.setTicker("CASH");
+            walletPositions.add(cashPosition);
+        }
         for (Position newPosition : newPositions) {
             boolean positionExists = false;
+            Position existingPosition = null;
 
-            for (Position existingPosition : existingPositions) {
-                if (newPosition.getTicker().equals(existingPosition.getTicker())) {
-                    existingPosition.setQuantity(existingPosition.getQuantity() + newPosition.getQuantity());
-
-                    Number unitValue = priceProxy.getLastPriceByTicker(newPosition.getTicker());
-                    existingPosition.setUnitValue(unitValue);
-
-
-
+            for (Position position : walletPositions) {
+                if (newPosition.getTicker().equals(position.getTicker())) {
+                    existingPosition = position;
                     positionExists = true;
                     break;
                 }
             }
-            if (!positionExists) {
-                Number unitValue = priceProxy.getLastPriceByTicker(newPosition.getTicker());
-                newPosition.setUnitValue(unitValue);
-                existingPositions.add(newPosition);
+
+            if (positionExists) {
+                existingPosition.setQuantity(existingPosition.getQuantity() + newPosition.getQuantity());
+            } else {
+                newPosition.setUsername(username);
+                walletPositions.add(newPosition);
+
+
             }
         }
+        // Ajoute une position "CASH" s'il n'existe pas encore
 
-        existingWallet.setPositions(existingPositions);
-         walletRepository.save(existingWallet);
+        walletRepository.saveAll(walletPositions);
 
-        return existingWallet.getPositions();
+        return walletPositions.stream()
+                .map(this::toPositionDTO)
+                .collect(Collectors.toList());
     }
 
-    @Transactional
-    public Wallet getWallet(String username) {
-
-
-        Wallet wallet = walletRepository.findByUsername(username);
-        double netWorth = calculateNetWorth(username);
-        if (wallet != null) {
-            List<Position> positions = wallet.getPositions();
-            wallet.setNetWorth(netWorth);
-            wallet.setPositions(positions);
-        }
-
-        return wallet;
+    private PositionDTO toPositionDTO(Position position) {
+        PositionDTO positionDTO = new PositionDTO();
+        positionDTO.setTicker(position.getTicker());
+        positionDTO.setQuantity(position.getQuantity());
+        positionDTO.setUnitValue(priceProxy.getLastPriceByTicker(position.getTicker()));
+        return positionDTO;
     }
+
+
+
 }
 
 

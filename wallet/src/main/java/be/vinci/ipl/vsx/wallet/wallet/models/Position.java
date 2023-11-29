@@ -18,15 +18,14 @@ public class Position {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
     private Long id;
+
+    private String username;
 
     //@Column(unique = true)
     private String ticker;
-    private int quantity;
+    private double quantity;
 
 
-
-    private Number unitValue;
 
 }

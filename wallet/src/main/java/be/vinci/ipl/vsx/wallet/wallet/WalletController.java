@@ -3,12 +3,9 @@ package be.vinci.ipl.vsx.wallet.wallet;
 
 
 import be.vinci.ipl.vsx.wallet.wallet.models.Position;
-import be.vinci.ipl.vsx.wallet.wallet.models.Wallet;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import be.vinci.ipl.vsx.wallet.wallet.models.PositionDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -30,23 +27,25 @@ public class WalletController {
         return ResponseEntity.ok(netWorth);
     }
 
-    @GetMapping("/{username}")
-    public Wallet getWallet(@PathVariable String username) {
-
-        Wallet wallet = walletService.getWallet(username);
-
-
-
-        return wallet;
-    }
 
     @PostMapping("/wallet/{username}")
-    public List<Position> addPositions(@PathVariable String username, @RequestBody List<Position> newPositions) {
-        return walletService.addPositions(username, newPositions);
+    public  ResponseEntity<List<PositionDTO>> addPositions(@PathVariable String username, @RequestBody List<Position> newPositions) {
+        List<PositionDTO> positions = walletService.addPositions(username, newPositions);
+
+        return ResponseEntity.ok(positions);
     }
 
     @GetMapping("/{username}/positions")
-    public List<Position> getPositions(@PathVariable String username) {
-        return walletService.getOpenPositions(username);
+    public ResponseEntity<List<PositionDTO>> getOpenPositions(@PathVariable String username) {
+        List<PositionDTO> positions = walletService.getOpenPositions(username);
+
+        return ResponseEntity.ok(positions);
+    }
+
+    @GetMapping("/{username}/all-positions")
+    public ResponseEntity<List<PositionDTO>> getPositions(@PathVariable String username) {
+        List<PositionDTO> positions = walletService.getAllPositions(username);
+
+        return ResponseEntity.ok(positions);
     }
 }
