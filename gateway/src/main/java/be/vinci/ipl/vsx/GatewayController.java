@@ -1,8 +1,6 @@
 package be.vinci.ipl.vsx;
 
-import be.vinci.ipl.vsx.exceptions.BadRequestException;
-import be.vinci.ipl.vsx.exceptions.ConflictException;
-import be.vinci.ipl.vsx.exceptions.UnauthorizedException;
+import be.vinci.ipl.vsx.exceptions.*;
 import be.vinci.ipl.vsx.models.*;
 import java.util.Objects;
 import org.springframework.http.HttpStatus;
@@ -25,6 +23,7 @@ public class GatewayController {
 
   @PostMapping("/authentication/connect")
   public ResponseEntity<String> connect(@RequestBody Credentials credentials) {
+
     try {
       String token = service.connect(credentials);
       return new ResponseEntity<>(token, HttpStatus.OK);

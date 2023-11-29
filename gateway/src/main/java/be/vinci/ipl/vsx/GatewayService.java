@@ -5,9 +5,11 @@ import be.vinci.ipl.vsx.data.InvestorProxy;
 import be.vinci.ipl.vsx.exceptions.BadRequestException;
 import be.vinci.ipl.vsx.exceptions.ConflictException;
 import be.vinci.ipl.vsx.exceptions.UnauthorizedException;
-import be.vinci.ipl.vsx.models.*;
+import be.vinci.ipl.vsx.models.Investor;
+import be.vinci.ipl.vsx.models.InvestorWithCredentials;
 import feign.FeignException;
 import org.springframework.stereotype.Service;
+import be.vinci.ipl.vsx.models.Credentials;
 
 @Service
 public class GatewayService {
@@ -41,7 +43,8 @@ public class GatewayService {
 
   public void createInvestor(InvestorWithCredentials investor) throws BadRequestException, ConflictException {
     try {
-      investorProxy.createInvestor(investor.toInvestor());
+      Investor investorWithoutCredentials = investor.toInvestor();
+      investorProxy.createInvestor(investorWithoutCredentials);
     } catch (FeignException e) {
       if (e.status() == 400) throw new BadRequestException();
       else if (e.status() == 409) throw new ConflictException();

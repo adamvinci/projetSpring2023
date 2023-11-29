@@ -1,12 +1,12 @@
 ### Create Investor
-POST http://localhost:8080/investor/Test1
+POST http://localhost:8080/investor/TestInvestor
 Content-Type: application/json
 
 {
-  "username": "Test1",
-  "email": "testuser@example.com",
+  "username": "TestInvestor",
+  "email": "testinvestor@example.com",
   "firstname": "John",
-  "lastname": "Doe",
+  "lastname": "Wick",
   "birthdate": "1990-01-01",
   "password": "PW1"
 }
@@ -16,6 +16,6 @@ POST http://localhost:8080/authentication/connect
 Content-Type: application/json
 
 {
-  "username": "Test1",
+  "username": "TestInvestor",
   "password": "PW1"
 }
