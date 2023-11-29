@@ -8,15 +8,15 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="investor" />
-        <module name="eureka" />
         <module name="authentification" />
         <module name="price" />
+        <module name="eureka" />
         <module name="demo (1) (be.vinci.ipl.vsx.investor)" />
         <module name="execute" />
         <module name="demo" />
+        <module name="authentication" />
         <module name="order" />
         <module name="matching" />
-        <module name="authentication" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
