@@ -95,4 +95,35 @@ public class GatewayService {
     }
   }
 
+  /**
+   * Delete Investor and everything linked to them
+   *
+   * @param  username Investor's username
+   * @return false if either no user or credentials found for this pseudo, true otherwise
+   */
+  public boolean deleteInvestor(String username) {
+
+
+    boolean found = true;
+
+    try {
+      authenticationProxy.deleteCredentials(username);
+    } catch (FeignException e) {
+      int code = e.status();
+      if (e.status() == 404) found = false;
+      else throw e;
+    }
+
+
+
+    try {
+      investorProxy.deleteInvestor(username);
+    } catch (FeignException e) {
+      int code2 = e.status();
+      if (e.status() == 404) found = false;
+      else throw e;
+    }
+    return found;
+  }
+
 }

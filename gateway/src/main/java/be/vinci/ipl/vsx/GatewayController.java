@@ -3,8 +3,10 @@ package be.vinci.ipl.vsx;
 import be.vinci.ipl.vsx.exceptions.*;
 import be.vinci.ipl.vsx.models.*;
 import java.util.Objects;
+import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,11 +53,10 @@ public class GatewayController {
   }
 
   @GetMapping("/investor/{username}")
-  public ResponseEntity<Investor> readInvestor(@PathVariable String username
-      // , @RequestHeader String token
-      ) {
-    // String validToken = service.verify(token);
-    // if(validToken == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+  public ResponseEntity<Investor> readInvestor(@PathVariable String username, @RequestHeader("Authorization") String token) {
+    String validToken = service.verify(token);
+    if(validToken == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    if(!validToken.equals(username)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
     Investor investor = service.readInvestor(username);
 
@@ -63,4 +64,19 @@ public class GatewayController {
     else return new ResponseEntity<>(investor, HttpStatus.OK);
   }
 
+  /**
+   * Delete an investor
+   * @param username Investor's username
+   * @return Credentials
+   */
+  @DeleteMapping("investor/{username}")
+  public ResponseEntity<?> deleteInvestor(@PathVariable String username, @RequestHeader("Authorization") String token) {
+    String validToken = service.verify(token);
+    if(validToken == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    if(!validToken.equals(username)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
+    boolean deleted = service.deleteInvestor(username);
+    if(!deleted) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    return new ResponseEntity<>(HttpStatus.OK);
+  }
 }

@@ -1,27 +1,54 @@
-### Create Investor
-POST http://localhost:8080/investor/TestInvestor5
+### Create 1st Investor
+POST http://localhost:8080/investor/TestInvestor1
 Content-Type: application/json
 
 {
-  "username": "TestInvestor5",
-  "email": "testinvestor5@example.com",
-  "firstname": "John5",
-  "lastname": "Wick5",
+  "username": "TestInvestor1",
+  "email": "testinvesto12@example.com",
+  "firstname": "John",
+  "lastname": "Wick",
   "birthdate": "1990-01-01",
   "password": "PW1"
 }
 
-### Connect Investor
+### Create 2nd Investor
+POST http://localhost:8080/investor/TestInvestor2
+Content-Type: application/json
+
+{
+  "username": "TestInvestor2",
+  "email": "testinvestor2@example.com",
+  "firstname": "Michael",
+  "lastname": "Johnson",
+  "birthdate": "1990-01-01",
+  "password": "PW2"
+}
+
+### Connect 1st Investor
 POST http://localhost:8080/authentication/connect
 Content-Type: application/json
 
 {
-  "username": "TestInvestor5",
+  "username": "TestInvestor1",
   "password": "PW1"
 }
 
 > {% client.global.set("token", response.body) %}
 
-### Read Investor
-GET http://localhost:8080/investor/TestInvestor5
+### Read 1st Investor
+GET http://localhost:8080/investor/TestInvestor1
 Authorization:{{token}}
+
+### Read 2nd Investor
+GET http://localhost:8080/investor/TestInvestor2
+Authorization:{{token}}
+// Should fail -> Unauthorized (401)
+
+### Delete 1st Investor
+DELETE http://localhost:8080/investor/TestInvestor1
+Authorization: {{token}}
+
+### Delete 2nd Investor
+DELETE http://localhost:8080/investor/TestInvestor2
+Authorization: {{token}}
+// Should fail -> Internal Server Error (500)

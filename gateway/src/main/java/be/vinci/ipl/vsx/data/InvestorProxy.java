@@ -21,6 +21,6 @@ public interface InvestorProxy {
   @PutMapping("/investor/{username}")
   void updateOne(@PathVariable String username, @RequestBody Investor investor);
 
-  @DeleteMapping
+  @DeleteMapping("/investor/{username}")
   void deleteInvestor(@PathVariable String username);
 }
