@@ -103,27 +103,34 @@ public class GatewayService {
    */
   public boolean deleteInvestor(String username) {
 
-
     boolean found = true;
 
     try {
       authenticationProxy.deleteCredentials(username);
     } catch (FeignException e) {
-      int code = e.status();
       if (e.status() == 404) found = false;
       else throw e;
     }
-
-
 
     try {
       investorProxy.deleteInvestor(username);
     } catch (FeignException e) {
-      int code2 = e.status();
       if (e.status() == 404) found = false;
       else throw e;
     }
     return found;
+  }
+
+
+  public boolean updateInvestor(Credentials credentials){
+    boolean changed = true;
+    try {
+      authenticationProxy.updateCredentials(credentials.getUsername(), credentials);
+    }catch (FeignException e){
+      if(e.status() == 400 || e.status() == 404 )changed = false;
+      throw e;
+    }
+    return changed;
   }
 
 }

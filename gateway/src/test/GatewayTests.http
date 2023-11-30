@@ -52,3 +52,37 @@ Authorization: {{token}}
 DELETE http://localhost:8080/investor/TestInvestor2
 Authorization: {{token}}
 // Should fail -> Internal Server Error (500)
+
+### Update 1st Investor
+PUT http://localhost:8080/investor/TestInvestor1
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+  "username": "TestInvestor1",
+  "password": "Password1"
+}
+
+### Reconnect 1st Investor (Fail)
+// Should fail -> 401, Incorrect Password (Credentials)
+POST http://localhost:8080/authentication/connect
+Content-Type: application/json
+
+{
+  "username": "TestInvestor1",
+  "password": "PW1"
+}
+
+### Reconnect 1st Investor
+
+POST http://localhost:8080/authentication/connect
+Content-Type: application/json
+
+{
+  "username": "TestInvestor1",
+  "password": "Password1"
+}
+
+> {% client.global.set("token", response.body) %}
+
+
