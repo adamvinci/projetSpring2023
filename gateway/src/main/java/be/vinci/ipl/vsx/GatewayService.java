@@ -2,25 +2,32 @@ package be.vinci.ipl.vsx;
 
 import be.vinci.ipl.vsx.data.AuthenticationProxy;
 import be.vinci.ipl.vsx.data.InvestorProxy;
+import be.vinci.ipl.vsx.data.OrderProxy;
 import be.vinci.ipl.vsx.exceptions.BadRequestException;
 import be.vinci.ipl.vsx.exceptions.ConflictException;
 import be.vinci.ipl.vsx.exceptions.UnauthorizedException;
 import be.vinci.ipl.vsx.models.Investor;
 import be.vinci.ipl.vsx.models.InvestorWithCredentials;
+import be.vinci.ipl.vsx.models.Order.Order;
 import feign.FeignException;
 import org.springframework.stereotype.Service;
 import be.vinci.ipl.vsx.models.Credentials;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 public class GatewayService {
 
   private final AuthenticationProxy authenticationProxy;
   private final InvestorProxy investorProxy;
+  private final OrderProxy orderProxy;
 
 
-  public GatewayService(AuthenticationProxy authenticationProxy, InvestorProxy investorProxy) {
+  public GatewayService(AuthenticationProxy authenticationProxy, InvestorProxy investorProxy,
+      OrderProxy orderProxy) {
     this.authenticationProxy = authenticationProxy;
     this.investorProxy = investorProxy;
+    this.orderProxy = orderProxy;
   }
 
   /**
@@ -131,6 +138,16 @@ public class GatewayService {
       throw e;
     }
     return changed;
+  }
+
+
+  public Order createOrder(Order order) throws BadRequestException {
+    try {
+      orderProxy.createOrder(order);
+    } catch (FeignException e) {
+      if(e.status() == 400) throw new BadRequestException();
+    }
+    return order;
   }
 
 }

@@ -2,8 +2,11 @@ package be.vinci.ipl.vsx;
 
 import be.vinci.ipl.vsx.exceptions.*;
 import be.vinci.ipl.vsx.models.*;
+import be.vinci.ipl.vsx.models.Order.Order;
+import feign.FeignException;
 import java.util.Objects;
 import java.util.Optional;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -96,7 +99,32 @@ public class GatewayController {
     if(validToken == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     if(!validToken.equals(username)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
+
+
     boolean updated = service.updateInvestor(credentials);
+    if(!updated) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     return new ResponseEntity<>(HttpStatus.OK);
+  }
+
+
+  /**
+   * Create new Order
+   * @param order new Order to be created
+   * @param token token
+   * @return New order
+   */
+  @PostMapping("order")
+  public ResponseEntity<Order> createOrder(@RequestBody Order order, @RequestHeader("Authorization") String token)
+      {
+
+        String validToken = service.verify(token);
+        if(validToken == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        if(!validToken.equals(order.getOwner())) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    try {
+      Order newOrder = service.createOrder(order);
+      return new ResponseEntity<>(newOrder,HttpStatus.OK);
+    } catch (BadRequestException e) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
   }
 }

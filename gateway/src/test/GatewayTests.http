@@ -85,4 +85,17 @@ Content-Type: application/json
 
 > {% client.global.set("token", response.body) %}
 
+### Create a buy order
+POST http://localhost:8080/order
+Authorization: {{token}}
+Content-Type: application/json
+
+{
+  "owner": "TestInvestor1",
+  "ticker": "AAFL",
+  "quantity": 4,
+  "type": "MARKET",
+  "side": "BUY"
+}
+> {% client.global.set("guid", response.body.guid);%}
 
