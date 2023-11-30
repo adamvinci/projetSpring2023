@@ -29,8 +29,8 @@ public class OrderController {
       if (order.invalid()) {
           return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
       }
-    boolean order1 = orderService.createOne(order);
-      if (!order1) {
+    boolean isCreated = orderService.createOne(order);
+      if (!isCreated) {
           return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
       } else {
           return new ResponseEntity<>(order, HttpStatus.CREATED);
