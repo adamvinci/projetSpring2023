@@ -1,5 +1,6 @@
 package be.vinci.ipl.vsx.wallet.wallet.data;
 
+import be.vinci.ipl.vsx.wallet.wallet.models.Investor;
 import be.vinci.ipl.vsx.wallet.wallet.models.Position;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -21,6 +22,5 @@ public interface WalletRepository extends CrudRepository<Position, String> {
      * @return List of positions associated with the provided username.
      */
     List<Position> findByUsername(String username);
-
 
 }

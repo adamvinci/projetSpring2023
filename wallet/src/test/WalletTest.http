@@ -25,14 +25,14 @@ Content-Type: application/json
 GET http://localhost:9003/price/AAPL
 
 
-### get last price of MSFT
-GET http://localhost:9003/price/MSFT
+### get last price of PYPL
+GET http://localhost:9003/price/PYPL
 
-### Patch last price of AAPL
-PATCH http://localhost:9003/price/AAPL
+### Patch last price of PYPL
+PATCH http://localhost:9003/price/PYPL
 Content-Type: application/json
 
-3
+10
 
 
 ### add positions in an investor wallet
@@ -41,12 +41,12 @@ Content-Type: application/json
 
 [
   {
-    "ticker": "AAPL",
-    "quantity": 5
+    "ticker": "PYPL",
+    "quantity": 10
   },
   {
-    "ticker": "MSFT",
-    "quantity": 1
+    "ticker": "CASH",
+    "quantity": 100
   }
 ]
 

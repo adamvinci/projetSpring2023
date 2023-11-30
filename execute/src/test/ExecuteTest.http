@@ -50,7 +50,7 @@ GET http://localhost:9003/price/AAFL
 
 
 ### Verify the buyer position (should be 4 AAFL and -40 CASH)
-GET http://localhost:9005/Cat3Life/positions
+GET http://localhost:9005/Cat3Life/all-positions
 
 ### Verify the buyer position (should be -4 AAFL and 40 CASH)
 GET http://localhost:9005/Cat4Life/positions
