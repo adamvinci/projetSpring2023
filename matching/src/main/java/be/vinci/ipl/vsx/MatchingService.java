@@ -176,7 +176,7 @@ public class MatchingService {
         transaction.setPrice(sellOrder.getLimit());
         return true;
       } else{
-        //MARKET et SELL je pense avoir besoin du price
+        //MARKET et SELL
         if(sellOrder.getFilled()+qntB<= sellOrder.getQuantity()){
           sellOrder.setFilled(sellOrder.getFilled()+qntB);
           buyOrder.setFilled(buyOrder.getQuantity());
