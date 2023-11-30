@@ -15,14 +15,33 @@ import java.util.Date;
 @Setter
 @ToString
 @NoArgsConstructor
-@Entity(name="investor")
+@Entity(name = "investor")
 public class Investor {
 
+    /**
+     * Unique identifier for the investor.
+     */
     @Id
     private String username;
+
+    /**
+     * Email address of the investor.
+     */
     private String email;
+
+    /**
+     * First name of the investor.
+     */
     private String firstname;
+
+    /**
+     * Last name of the investor.
+     */
     private String lastname;
+
+    /**
+     * Date of birth of the investor.
+     */
     private LocalDate birthdate;
 
 

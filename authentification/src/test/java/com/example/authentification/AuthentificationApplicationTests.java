@@ -1,13 +1,13 @@
-package be.vinci.ipl.vsx.wallet.wallet;
+package com.example.authentification;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class WalletApplicationTests {
+class AuthentificationApplicationTests {
 
-    @Test
-    void contextLoads() {
-    }
+  @Test
+  void contextLoads() {
+  }
 
 }

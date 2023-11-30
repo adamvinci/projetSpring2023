@@ -21,32 +21,22 @@ Content-Type: application/json
 "lastname": "Doe",
 "birthdate": "1990-01-01"
 }
-
-### net worth of an investor
-GET http://localhost:9005/wallet/testuser/net-worth
-
-
-### get wallet
-GET http://localhost:9005/billy
-
-
-### get investor
-GET http://localhost:9006/investor/billy
-
 ### get last price of AAPL
 GET http://localhost:9003/price/AAPL
 
-### get last price of XYZ
-GET http://localhost:9003/price/XYZ
 
-### Test PATCH
+### get last price of MSFT
+GET http://localhost:9003/price/MSFT
+
+### Patch last price of AAPL
 PATCH http://localhost:9003/price/AAPL
 Content-Type: application/json
 
 3
 
+
 ### add positions in an investor wallet
-POST http://localhost:9005/wallet/testuser
+POST http://localhost:9005/wallet/billy
 Content-Type: application/json
 
 [
@@ -55,10 +45,22 @@ Content-Type: application/json
     "quantity": 5
   },
   {
-    "ticker": "XYZ",
+    "ticker": "MSFT",
     "quantity": 1
   }
 ]
 
+
+### net worth of an investor
+GET http://localhost:9005/wallet/billy/net-worth
+
+
+### get all open positions
+GET http://localhost:9005/billy/positions
+
 ### get all positions
-GET http://localhost:9005/testuser/positions
+GET http://localhost:9005/testuser/all-positions
+
+
+
+
