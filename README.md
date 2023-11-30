@@ -9,6 +9,5 @@
 6. Execute
 
 **Note:**
-To avoid 503 errors from Feign, wait until the service runs before launching the following one. If you relaunch one service, you should relaunch all the following ones as well.
+To avoid 503 errors from Feign, wait until the service start before launching the following one. If you relaunch one service, you should relaunch all the following ones as well.
 
-If you have any questions or need assistance with your Spring project, feel free to ask!
