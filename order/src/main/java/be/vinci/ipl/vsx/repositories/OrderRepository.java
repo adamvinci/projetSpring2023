@@ -1,7 +1,7 @@
 package be.vinci.ipl.vsx.repositories;
 
 import be.vinci.ipl.vsx.models.Order;
-import be.vinci.ipl.vsx.models.Order.OrderSide;
+import be.vinci.ipl.vsx.models.OrderSide;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

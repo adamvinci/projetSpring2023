@@ -78,14 +78,6 @@ public class Order {
   @Column(nullable = false)
   private int filled;
 
-  public enum OrderType {
-    MARKET, LIMIT,
-  }
-
-  public enum OrderSide {
-    BUY, SELL,
-  }
-
   /**
    * Checks whether the current instance represents an invalid order.
    * @return true if the order instance is invalid or false if valid

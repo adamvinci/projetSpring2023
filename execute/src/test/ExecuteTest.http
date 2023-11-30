@@ -50,10 +50,10 @@ GET http://localhost:9003/price/AAFL
 
 
 ### Verify the buyer position (should be 4 AAFL and -40 CASH)
-GET http://localhost:9005/wallet/Cat3Life
+GET http://localhost:9005/Cat3Life/positions
 
-### Verify the seller position (should be -4 AAFL and 40 CASH)
-GET http://localhost:9005/wallet/Cat4Life
+### Verify the buyer position (should be -4 AAFL and 40 CASH)
+GET http://localhost:9005/Cat4Life/positions
 
 
 --------------------------------------------------------------------BAD_REQUEST TEST----------------------------------------------------------

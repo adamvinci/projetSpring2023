@@ -6,7 +6,7 @@ Content-Type: application/json
   "guid": "1234",
   "owner": "Alice",
   "ticker": "AAPL",
-  "quantity": 100,
+  "quantity": 19,
   "type": "LIMIT",
   "side": "BUY",
   "limit": 150.0,
@@ -35,9 +35,9 @@ Content-Type: application/json
 
 {
 "guid": "9101",
-"owner": "Charlie",
+"owner": "Cat4Life",
 "ticker": "AAPL",
-"quantity": 100,
+"quantity": 56,
 "type": "LIMIT",
 "side": "SELL",
 "limit": 140.0,

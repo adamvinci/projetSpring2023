@@ -1,8 +1,8 @@
 package be.vinci.ipl.vsx;
 
 import be.vinci.ipl.vsx.models.FilledQuantity;
-import be.vinci.ipl.vsx.models.Order;
-import be.vinci.ipl.vsx.models.Order.OrderSide;
+import be.vinci.ipl.vsx.models.*;
+import be.vinci.ipl.vsx.models.OrderSide;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
