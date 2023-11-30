@@ -153,7 +153,7 @@ public class GatewayService {
   }
 
 
-  public Iterable<Order> readAllOrdersByUser(String username) throws NotFoundException {
+  public Iterable<Order> readAllOrdersByInvestor(String username) throws NotFoundException {
     try {
       investorProxy.readOne(username);
     } catch (FeignException e) {

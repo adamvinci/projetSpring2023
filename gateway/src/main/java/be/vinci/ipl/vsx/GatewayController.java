@@ -128,13 +128,13 @@ public class GatewayController {
   }
 
   @GetMapping("/order/by-user/{username}")
-  public ResponseEntity<Iterable<Order>> readAllOrdersByUser(@PathVariable String username, @RequestHeader("Authorization") String token){
+  public ResponseEntity<Iterable<Order>> readAllOrdersByInvestor(@PathVariable String username, @RequestHeader("Authorization") String token){
     String validToken = service.verify(token);
     if(validToken == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     if(!validToken.equals(username)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
     try {
-      Iterable<Order> orders = service.readAllOrdersByUser(username);
+      Iterable<Order> orders = service.readAllOrdersByInvestor(username);
       return new ResponseEntity<>(orders, HttpStatus.OK);
     } catch (NotFoundException e) {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
