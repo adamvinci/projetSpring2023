@@ -11,9 +11,6 @@
         <module name="eureka" />
         <module name="authentification" />
         <module name="price" />
-        <module name="demo (1) (be.vinci.ipl.vsx.investor)" />
-        <module name="execute" />
-        <module name="demo" />
         <module name="order" />
         <module name="matching" />
         <module name="authentication" />
