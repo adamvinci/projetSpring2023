@@ -42,7 +42,7 @@ public class ExecuteService {
 
     // Update buyer wallet
     Position positionBuyerTicker = new Position(transaction.getTicker(), transaction.getQuantity(), pricePerStock);
-    Position positionBuyerCash = new Position("CASH", (int) -transaction.getPrice().intValue(), 1);
+    Position positionBuyerCash = new Position("CASH", -transaction.getPrice().intValue(), 1);
     walletProxy.addPositions(transaction.getBuyer(), List.of(positionBuyerTicker, positionBuyerCash));
 
     // Update seller wallet
