@@ -24,6 +24,21 @@ public class GatewayService {
   }
 
   /**
+   * Get user pseudo from connection token
+   *
+   * @param token Connection token
+   * @return User pseudo, or null if token invalid
+   */
+  public String verify(String token) {
+    try {
+      return authenticationProxy.verify(token);
+    } catch (FeignException e) {
+      if (e.status() == 400) return null;
+      else throw e;
+    }
+  }
+
+  /**
    * Get connection token from credentials
    *
    * @param credentials Credentials of the user
@@ -61,6 +76,21 @@ public class GatewayService {
 
       if (e.status() == 400) throw new BadRequestException();
       else if (e.status() == 409) throw new ConflictException();
+      else throw e;
+    }
+  }
+
+  /**
+   * Read investor information
+   *
+   * @param username Username of the investor
+   * @return Investor information, or null if investor not found
+   */
+  public Investor readInvestor(String username) {
+    try {
+      return investorProxy.readOne(username);
+    } catch (FeignException e) {
+      if (e.status() == 404) return null;
       else throw e;
     }
   }

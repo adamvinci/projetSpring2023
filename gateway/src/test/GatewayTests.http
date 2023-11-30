@@ -1,12 +1,12 @@
 ### Create Investor
-POST http://localhost:8080/investor/TestInvestor
+POST http://localhost:8080/investor/TestInvestor5
 Content-Type: application/json
 
 {
-  "username": "TestInvestor",
-  "email": "testinvestor@example.com",
-  "firstname": "John",
-  "lastname": "Wick",
+  "username": "TestInvestor5",
+  "email": "testinvestor5@example.com",
+  "firstname": "John5",
+  "lastname": "Wick5",
   "birthdate": "1990-01-01",
   "password": "PW1"
 }
@@ -16,6 +16,12 @@ POST http://localhost:8080/authentication/connect
 Content-Type: application/json
 
 {
-  "username": "TestInvestor",
+  "username": "TestInvestor5",
   "password": "PW1"
 }
+
+> {% client.global.set("token", response.body) %}
+
+### Read Investor
+GET http://localhost:8080/investor/TestInvestor5
+Authorization:{{token}}
