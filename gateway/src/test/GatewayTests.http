@@ -99,3 +99,7 @@ Content-Type: application/json
 }
 > {% client.global.set("guid", response.body.guid);%}
 
+### Read all of Investor's order
+GET http://localhost:8080/order/by-user/TestInvestor1
+Authorization: {{token}}
+

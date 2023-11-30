@@ -5,6 +5,7 @@ import be.vinci.ipl.vsx.data.InvestorProxy;
 import be.vinci.ipl.vsx.data.OrderProxy;
 import be.vinci.ipl.vsx.exceptions.BadRequestException;
 import be.vinci.ipl.vsx.exceptions.ConflictException;
+import be.vinci.ipl.vsx.exceptions.NotFoundException;
 import be.vinci.ipl.vsx.exceptions.UnauthorizedException;
 import be.vinci.ipl.vsx.models.Investor;
 import be.vinci.ipl.vsx.models.InvestorWithCredentials;
@@ -12,6 +13,7 @@ import be.vinci.ipl.vsx.models.Order.Order;
 import feign.FeignException;
 import org.springframework.stereotype.Service;
 import be.vinci.ipl.vsx.models.Credentials;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -148,6 +150,16 @@ public class GatewayService {
       if(e.status() == 400) throw new BadRequestException();
     }
     return order;
+  }
+
+
+  public Iterable<Order> readAllOrdersByUser(String username) throws NotFoundException {
+    try {
+      investorProxy.readOne(username);
+    } catch (FeignException e) {
+      if(e.status() == 404) throw new NotFoundException();
+    }
+    return orderProxy.readAllOrdersByUser(username);
   }
 
 }

@@ -116,7 +116,6 @@ public class GatewayController {
   @PostMapping("order")
   public ResponseEntity<Order> createOrder(@RequestBody Order order, @RequestHeader("Authorization") String token)
       {
-
         String validToken = service.verify(token);
         if(validToken == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         if(!validToken.equals(order.getOwner())) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
@@ -125,6 +124,20 @@ public class GatewayController {
       return new ResponseEntity<>(newOrder,HttpStatus.OK);
     } catch (BadRequestException e) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @GetMapping("/order/by-user/{username}")
+  public ResponseEntity<Iterable<Order>> readAllOrdersByUser(@PathVariable String username, @RequestHeader("Authorization") String token){
+    String validToken = service.verify(token);
+    if(validToken == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    if(!validToken.equals(username)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
+    try {
+      Iterable<Order> orders = service.readAllOrdersByUser(username);
+      return new ResponseEntity<>(orders, HttpStatus.OK);
+    } catch (NotFoundException e) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
 }
