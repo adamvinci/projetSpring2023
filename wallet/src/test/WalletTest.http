@@ -41,12 +41,8 @@ Content-Type: application/json
 
 [
   {
-    "ticker": "AAPL",
-    "quantity": 5
-  },
-  {
-    "ticker": "MSFT",
-    "quantity": 1
+    "ticker": "CASH",
+    "quantity": -3
   }
 ]
 
@@ -59,7 +55,7 @@ GET http://localhost:9005/wallet/billy/net-worth
 GET http://localhost:9005/TestInvestor1/positions
 
 ### get all positions
-GET http://localhost:9005/testuser/all-positions
+GET http://localhost:9005/TestInvestor1/all-positions
 
 
 

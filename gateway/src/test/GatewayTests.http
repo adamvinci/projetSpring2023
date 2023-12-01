@@ -110,3 +110,27 @@ Authorization: {{token}}
 ### Get Investor's openPositions (Wallet Composition)
 GET http://localhost:8080/wallet/TestInvestor1
 Authorization: {{token}}
+
+### Deposit Cash in Investor's 1 account
+POST http://localhost:8080/wallet/TestInvestor1
+Authorization: {{token}}
+Content-Type: application/json
+
+[
+{
+  "ticker": "CASH",
+  "quantity": 1000
+}
+]
+
+### Withdraw Cash in Investor's 1 account
+POST http://localhost:8080/wallet/TestInvestor1
+Authorization: {{token}}
+Content-Type: application/json
+
+[
+  {
+    "ticker": "CASH",
+    "quantity": -500
+  }
+]

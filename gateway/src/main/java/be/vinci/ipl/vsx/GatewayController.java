@@ -5,7 +5,9 @@ import be.vinci.ipl.vsx.models.Credentials.Credentials;
 import be.vinci.ipl.vsx.models.Investor.Investor;
 import be.vinci.ipl.vsx.models.Investor.InvestorWithCredentials;
 import be.vinci.ipl.vsx.models.Order.Order;
+import be.vinci.ipl.vsx.models.Wallet.Position;
 import be.vinci.ipl.vsx.models.Wallet.PositionDTO;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.http.HttpStatus;
@@ -171,4 +173,18 @@ public class GatewayController {
     }
   }
 
+  @PostMapping("/wallet/{username}")
+  public ResponseEntity<List<PositionDTO>> WithdrawOrDepositCash(@PathVariable String username, @RequestHeader("Authorization") String token, @RequestBody
+      List<Position> positions){
+    String validToken = service.verify(token);
+    if(validToken == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    if(!validToken.equals(username)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
+    try {
+      List<PositionDTO> updatedList = service.addCash(username,positions);
+      return new ResponseEntity<>(updatedList, HttpStatus.OK);
+    } catch (NotFoundException e) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
 }

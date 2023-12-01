@@ -11,6 +11,7 @@ import be.vinci.ipl.vsx.exceptions.UnauthorizedException;
 import be.vinci.ipl.vsx.models.Investor.Investor;
 import be.vinci.ipl.vsx.models.Investor.InvestorWithCredentials;
 import be.vinci.ipl.vsx.models.Order.Order;
+import be.vinci.ipl.vsx.models.Wallet.Position;
 import be.vinci.ipl.vsx.models.Wallet.PositionDTO;
 import feign.FeignException;
 import java.util.List;
@@ -181,6 +182,15 @@ public class GatewayService {
       if(e.status() == 404) throw new NotFoundException();
     }
     return walletProxy.getOpenPositions(username);
+  }
+
+  public List<PositionDTO> addCash(String username, List<Position> positions) throws NotFoundException {
+    try {
+      investorProxy.readOne(username);
+    } catch (FeignException e) {
+      if(e.status() == 404) throw new NotFoundException();
+    }
+    return walletProxy.addPositions(username, positions);
   }
 
 
