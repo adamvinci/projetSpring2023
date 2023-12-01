@@ -1,14 +1,13 @@
 package be.vinci.ipl.vsx.investor;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
+import be.vinci.ipl.vsx.investor.models.Investor;
+import be.vinci.ipl.vsx.investor.models.InvestorWithPassword;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.net.Inet4Address;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -32,19 +31,19 @@ public class InvestorController {
      * @return ResponseEntity containing the result of the creation operation.
      */
     @PostMapping("/investor/{username}")
-    public ResponseEntity<?> createInvestor(@PathVariable String username ,@RequestBody Investor investor) {
+    public ResponseEntity<?> createInvestor(@PathVariable String username ,@RequestBody InvestorWithPassword investor) {
         try {
 
-            if(!investor.getUsername().equals(username)){
+            if(!investor.getInvestor().getUsername().equals(username)){
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("les donnees de l'investisseur sont invalides");
             }
 
-            Optional<Investor> investorExists = Optional.ofNullable(investorService.getInvestorByUsername(investor.getUsername()));
+            Optional<Investor> investorExists = Optional.ofNullable(investorService.getInvestorByUsername(investor.getInvestor().getUsername()));
             if(investorExists.isPresent()){
                 return ResponseEntity.status(HttpStatus.CONFLICT).body("L'investisseur existe deja");
 
             }
-            Investor createdInvestor = investorService.createInvestor(investor);
+            Boolean createdInvestor = investorService.createInvestor(investor);
 
 
             return ResponseEntity.status(HttpStatus.CREATED).body(createdInvestor );
