@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient(name = "authentication")
 public interface AuthenticationProxy {
 
+
     @PostMapping("/authentication/{username}")
     void createCredentials(@PathVariable String username, @RequestBody Credentials credentials);
-
     @DeleteMapping("/authentication/{username}")
     void deleteCredentials(@PathVariable String username);
 

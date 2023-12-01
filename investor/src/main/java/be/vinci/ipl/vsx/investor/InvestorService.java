@@ -60,7 +60,7 @@ public class InvestorService {
         Credentials cerdential = new Credentials();
         cerdential.setUsername(investor.getInvestor().getUsername());
         cerdential.setPassword(investor.getPassword());
-        authenticationProxy.createCredentials(investor.getInvestor().getUsername(),cerdential);
+        authenticationProxy.createCredentials(cerdential.getUsername(),cerdential);
 
         investorRepository.save(investor.getInvestor());
         return true;

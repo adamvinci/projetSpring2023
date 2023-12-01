@@ -1,28 +1,21 @@
 
-### Create an user
+
+
+### Crée un nouvel investisseur dans le système
 POST http://localhost:9006/investor/picsou
 Content-Type: application/json
 
 {
-  "username": "picsou",
-  "email": "picsou@canardville.com",
-  "firstname": "Scrooge",
-  "lastname": "McDuck",
-  "birthdate": "15/12/1947"
+  "investor": {
+    "username": "picsou",
+    "email": "picsou@test.com",
+    "firstname": "picsou",
+    "lastname": "test",
+    "birthdate": "01/12/2000"
+  },
+  "password": "password123"
 }
 
-
-### create second investor
-POST http://localhost:9006/investor/billy
-Content-Type: application/json
-
-{
-  "username": "billy",
-  "email": "billy@example.com",
-  "firstname": "bilal",
-  "lastname": "Doe",
-  "birthdate": "1990-01-01"
-}
 
 ### read all
 GET http://localhost:9006/investor/readAll
@@ -37,7 +30,7 @@ PUT http://localhost:9006/investor/picsou
 Content-Type: application/json
 
 {
-  "username": "testuser",
+  "username": "picsou",
   "email": "updated_picsou@example.com",
   "firstname": "Updated",
   "lastname": "McDuck",
@@ -49,56 +42,4 @@ Content-Type: application/json
 DELETE http://localhost:9006/investor/picsou
 
 
-
--------BAD REQUEST --------------
-
-### Create an user with invalid data
-POST http://localhost:9006/investor/testuser1
-Content-Type: application/json
-
-{
-  "username": "testuser",
-  "email": "testuser@example.com",
-  "firstname": "John",
-  "lastname": "Doe",
-  "birthdate": "1990-01-01"
-}
-
-### create an investor that already exists
-POST http://localhost:9006/investor/testuser
-Content-Type: application/json
-
-{
-"username": "testuser",
-"email": "testuser@example.com",
-"firstname": "John",
-"lastname": "Doe",
-"birthdate": "1990-01-01"
-}
-
-
-### update one investor with invalid data
-PUT http://localhost:9006/investor/testuser
-Content-Type: application/json
-
-{
-  "username": "wrong investor",
-  "email": "updateduser@example.com",
-  "firstname": "Updated",
-  "lastname": "User",
-  "birthdate": "1990-01-01"
-}
-
-
-### update an investor that does not exist
-PUT http://localhost:9006/investor/sebastien
-Content-Type: application/json
-
-{
-  "username": "sebastien",
-  "email": "sebastien@example.com",
-  "firstname": "sebastien",
-  "lastname": "sebastien",
-  "birthdate": "1990-01-01"
-}
 

@@ -32,7 +32,7 @@ public class InvestorController {
      */
     @PostMapping("/investor/{username}")
     public ResponseEntity<?> createInvestor(@PathVariable String username ,@RequestBody InvestorWithPassword investor) {
-        try {
+
 
             if(!investor.getInvestor().getUsername().equals(username)){
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("les donnees de l'investisseur sont invalides");
@@ -47,9 +47,7 @@ public class InvestorController {
 
 
             return ResponseEntity.status(HttpStatus.CREATED).body(createdInvestor );
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("les donnees de l'investisseur sont invalides");
-        }
+
     }
 
 
