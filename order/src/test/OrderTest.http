@@ -96,6 +96,19 @@ Content-Type: application/json
   "side": "BUY"
 }
 
+### Create order with market and LIMIT money
+POST http://localhost:9001/order
+Content-Type: application/json
+
+{
+  "owner": "Cat4Life",
+  "ticker": "AAFL",
+  "quantity": 4,
+  "type": "MARKET",
+  "side": "BUY",
+  "limit": 5
+}
+
 ### Read one non-existing guid
 GET http://localhost:9001/order/7
 
