@@ -10,13 +10,10 @@ import lombok.Setter;
 @Setter
 public class Position {
   private String ticker;
-  private int quantity;
-  private Number unitValue;
-
-  public Position(String ticker, int quantity, Number unitValue) {
+  private Number quantity;
+  public Position(String ticker, Number quantity) {
     this.ticker = ticker;
     this.quantity = quantity;
-    this.unitValue = unitValue;
   }
 
 }
