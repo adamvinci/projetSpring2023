@@ -16,15 +16,29 @@ public class InvestorController {
 
     private InvestorService investorService;
 
-
+    /**
+     * Constructor for InvestorController.
+     *
+     * @param investorService The service handling investor-related business logic.
+     */
     public InvestorController(InvestorService investorService) {
         this.investorService = investorService;
     }
 
-
-    @PostMapping("/investor")
-    public ResponseEntity<?> createInvestor(@RequestBody Investor investor) {
+    /**
+     * Endpoint to create a new investor in the system.
+     *
+     * @param investor The investor data to be created.
+     * @return ResponseEntity containing the result of the creation operation.
+     */
+    @PostMapping("/investor/{username}")
+    public ResponseEntity<?> createInvestor(@PathVariable String username ,@RequestBody Investor investor) {
         try {
+
+            if(!investor.getUsername().equals(username)){
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("les donnees de l'investisseur sont invalides");
+            }
+
             Optional<Investor> investorExists = Optional.ofNullable(investorService.getInvestorByUsername(investor.getUsername()));
             if(investorExists.isPresent()){
                 return ResponseEntity.status(HttpStatus.CONFLICT).body("L'investisseur existe deja");
@@ -40,15 +54,20 @@ public class InvestorController {
     }
 
 
-
+    /**
+     * Endpoint to retrieve information about a specific investor.
+     *
+     * @param username The username of the investor.
+     * @return Investor object containing information about the investor.
+     */
     @GetMapping("/investor/{username}")
-    public  Investor readOne(@PathVariable String username) {
-        Investor user = investorService.getInvestorByUsername(username);
-        if (user == null){
+    public  ResponseEntity<Investor> readOne(@PathVariable String username) {
+        Investor investor = investorService.getInvestorByUsername(username);
+        if (investor == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
         };
-        return user;
+        return ResponseEntity.ok(investor);
     }
 
     @GetMapping("/investor/readAll")
@@ -59,7 +78,12 @@ public class InvestorController {
 
 
 
-
+    /**
+     * Endpoint to update information about a specific investor.
+     *
+     * @param username The username of the investor.
+     * @param investor The updated investor data.
+     */
     @PutMapping("/investor/{username}")
     public void updateOne(@PathVariable String username, @RequestBody Investor investor) {
 
@@ -75,6 +99,13 @@ public class InvestorController {
         if (!found) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 
+
+    /**
+     * Endpoint to delete a specific investor.
+     *
+     * @param username The username of the investor to be deleted.
+     * @return ResponseEntity indicating the result of the deletion operation.
+     */
     @DeleteMapping("investor/{username}")
     public ResponseEntity<?> deleteInvestor(@PathVariable String username) {
 

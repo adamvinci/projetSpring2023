@@ -19,10 +19,21 @@ public class MatchingController {
   public MatchingController(MatchingService matchingService) {
     this.matchingService = matchingService;
   }
+
+  /**
+   * Traite la réception d'un ordre pour un ticker spécifié, vérifie la validité de l'ordre
+   * et déclenche son exécution via le service de correspondance (MatchingService).
+   *
+   * @param ticker Le ticker spécifié dans l'URL pour lequel l'ordre est destiné
+   * @param order  L'ordre reçu dans le corps de la requête
+   * @return       Une réponse HTTP indiquant le statut de la transaction :
+   *               - OK (200) si l'ordre est exécuté avec succès
+   *               - BAD_REQUEST (400) si l'ordre est invalide ou n'a pas pu être exécuté
+   */
   @PostMapping("/trigger/{ticker}")
   public ResponseEntity<String> triggerMatching(@PathVariable String ticker, @RequestBody Order order) {
     // Vérification si l'ordre reçu est valide
-    if (order==null) {
+    if (order==null || !order.getTicker().equals(ticker)) {
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
     // Vérification si l'ordre reçu existe et execution de l'ordre

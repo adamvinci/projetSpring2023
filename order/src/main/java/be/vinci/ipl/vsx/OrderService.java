@@ -28,7 +28,7 @@ public class OrderService {
    * price
    */
   public boolean createOne(Order order) {
-    if (order.getType() == OrderType.LIMIT && order.getLimit() == null) {
+    if (order.getType() == OrderType.LIMIT && order.getLimit() == null || (order.getType() == OrderType.MARKET && order.getLimit() != null)) {
       return false;
     }
     orderRepository.save(order);
@@ -55,7 +55,7 @@ public class OrderService {
       return;
     }
 
-    order.setFilled(filled);
+    order.setFilled(order.getFilled()+filled);
     orderRepository.save(order);
 
   }

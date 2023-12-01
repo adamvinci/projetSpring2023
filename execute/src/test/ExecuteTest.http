@@ -1,60 +1,182 @@
+//If test return 500 or 503 error code, relaunch matching order and then execute wait for each service to start before launching the next one /////////////////////////////////////////
+
+// EXAMPLE 1 from Project description :
 ### Create sell order
 POST http://localhost:9001/order
 Content-Type: application/json
 
 {
-  "owner": "Cat4Life",
-  "ticker": "AAFL",
-  "quantity": 6,
-  "type": "MARKET",
-  "side": "SELL"
+  "owner": "Alice",
+  "ticker": "LNRD",
+  "quantity": 5,
+  "type": "LIMIT",
+  "side": "SELL",
+  "limit": 10
 }
 > {% client.global.set("guidsell", response.body.guid);%}
 
+
+### Create buy order (create a match in matching)
+POST http://localhost:9001/order
+Content-Type: application/json
+
+{
+  "owner": "Bob",
+  "ticker": "LNRD",
+  "quantity": 5,
+  "type": "LIMIT",
+  "side": "BUY",
+  "limit": 13
+}
+> {% client.global.set("guidbuy", response.body.guid);%}
+
+### Execute with good params (the transaction send by matching to execute)
+POST http://localhost:9002/execute/AAFL/Alice/Bob
+Content-Type: application/json
+
+{
+  "ticker": "AAFL",
+  "seller": "Alice",
+  "buyer": "bob",
+  "buy_order_guid": "{{guidbuy}}",
+  "sell_order_guid": "{{guidsell}}",
+  "quantity": 5,
+  "price": 11.5
+}
+
+### Verify buy order (filled should be 5)
+GET http://localhost:9001/order/{{guidbuy}}
+
+### Verify sell order (filled should be 5)
+GET http://localhost:9001/order/{{guidsell}}
+
+### Verify that the price has been updated (should be 11.5)
+GET http://localhost:9003/price/LNRD
+
+### Verify the buyer position (should be 5 LNRD and (-11.5*5=-57.5) CASH)
+GET http://localhost:9005/Bob/all-positions
+
+### Verify the seller position (should be -5 LNRD and (11.5*5 = 57.5) CASH)
+GET http://localhost:9005/Alice/all-positions
+
+
+// EXAMPLE 6 from Project description :
+### Create sell order
+POST http://localhost:9001/order
+Content-Type: application/json
+
+{
+  "owner": "Alice",
+  "ticker": "LNRD",
+  "quantity": 200,
+  "type": "LIMIT",
+  "side": "SELL",
+  "limit": 10
+}
+> {% client.global.set("guidsell", response.body.guid);%}
 
 ### Create buy order
 POST http://localhost:9001/order
 Content-Type: application/json
 
 {
-  "owner": "Cat3Life",
-  "ticker": "AAFL",
-  "quantity": 4,
+  "owner": "Bob",
+  "ticker": "LNRD",
+  "quantity": 50,
   "type": "MARKET",
   "side": "BUY"
 }
-> {% client.global.set("guidbuy", response.body.guid);%}
+> {% client.global.set("guidbuyBob", response.body.guid);%}
 
-### Execute with good params
-POST http://localhost:9002/execute/AAFL/Cat4Life/Cat3Life
+### Execute with good params (the transaction send by matching to execute)
+POST http://localhost:9002/execute/AAFL/Alice/Bob
 Content-Type: application/json
 
 {
-  "ticker": "AAFL",
-  "seller": "Cat4Life",
-  "buyer": "Cat3Life",
+  "ticker": "LNRD",
+  "seller": "Alice",
+  "buyer": "Bob",
   "buy_order_guid": "{{guidbuy}}",
-  "sell_order_guid": "{{guidsell}}",
-  "quantity": "4",
-  "price": "10"
+  "sell_order_guid": "{{guidbuyBob}}",
+  "quantity": 50,
+  "price": 10
 }
 
-### Verify buy order (filled should be 4)
-GET http://localhost:9001/order/{{guidbuy}}
+### Verify bob buy order (filled should be 50)
+GET http://localhost:9001/order/{{guidbuyBob}}
 
-### Verify sell order (filled should be 4)
+### Verify alice sell order (filled should be 50)
 GET http://localhost:9001/order/{{guidsell}}
 
-### Verify that the price has been updated (should be 10)
-GET http://localhost:9003/price/AAFL
+### Create buy order
+POST http://localhost:9001/order
+Content-Type: application/json
 
+{
+  "owner": "Cedric",
+  "ticker": "LNRD",
+  "quantity": 50,
+  "type": "MARKET",
+  "side": "BUY"
+}
+> {% client.global.set("guidbuyCedric", response.body.guid);%}
 
-### Verify the buyer position (should be 4 AAFL and -40 CASH)
-GET http://localhost:9005/Cat3Life/positions
+### Execute with good params (the transaction send by matching to execute)
+POST http://localhost:9002/execute/AAFL/Alice/Cedric
+Content-Type: application/json
 
-### Verify the buyer position (should be -4 AAFL and 40 CASH)
-GET http://localhost:9005/Cat4Life/positions
+{
+  "ticker": "LNRD",
+  "seller": "Alice",
+  "buyer": "Cedric",
+  "buy_order_guid": "{{guidbuy}}",
+  "sell_order_guid": "{{guidbuyCedric}}",
+  "quantity": 50,
+  "price": 10
+}
 
+### Verify Cedric buy order (filled should be 50)
+GET http://localhost:9001/order/{{guidbuyCedric}}
+
+### Verify alice sell order (filled should be 100)
+GET http://localhost:9001/order/{{guidsell}}
+
+### Create buy order
+POST http://localhost:9001/order
+Content-Type: application/json
+
+{
+  "owner": "Fred",
+  "ticker": "LNRD",
+  "quantity": 100,
+  "type": "LIMIT",
+  "side": "BUY",
+  "limit": 11
+}
+> {% client.global.set("guidbuyFred", response.body.guid);%}
+
+### Execute with good params (the transaction send by matching to execute)
+POST http://localhost:9002/execute/AAFL/Alice/Fred
+Content-Type: application/json
+
+{
+  "ticker": "LNRD",
+  "seller": "Alice",
+  "buyer": "Fred",
+  "buy_order_guid": "{{guidbuy}}",
+  "sell_order_guid": "{{guidbuyFred}}",
+  "quantity": 100,
+  "price": 10.5
+}
+
+### Verify Cedric buy order (filled should be 100)
+GET http://localhost:9001/order/{{guidbuyFred}}
+
+### Verify alice sell order (filled should be 200)
+GET http://localhost:9001/order/{{guidsell}}
+
+### Verify that the price has been updated (should be 10.5)
+GET http://localhost:9003/price/LNRD
 
 --------------------------------------------------------------------BAD_REQUEST TEST----------------------------------------------------------
 

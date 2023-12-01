@@ -8,6 +8,4 @@ import java.util.Optional;
 @Repository
 public interface InvestorRepository extends CrudRepository<Investor,String> {
 
-    Optional<Investor> findByEmail(String email);
-
 }

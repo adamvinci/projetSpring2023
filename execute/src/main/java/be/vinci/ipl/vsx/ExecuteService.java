@@ -32,22 +32,22 @@ public class ExecuteService {
    * @param transaction the transaction which has been executed
    */
   public void executeTransaction(Transaction transaction) {
+    // Update order status
     orderProxy.updateOne(transaction.getBuy_order_guid(), new FilledQuantity(transaction.getQuantity()));
     orderProxy.updateOne(transaction.getSell_order_guid(), new FilledQuantity(transaction.getQuantity()));
+
+    // Update last stock price
     priceProxy.updatePrice(transaction.getTicker(), transaction.getPrice());
 
-    // Calculate the total price of the order
-    Number totalPrice = transaction.getQuantity() * transaction.getPrice().doubleValue();
-    int totalPriceAsInt = (int) -totalPrice.intValue();
-    //Update buyer wallet
-    Position positionBuyerTicker = new Position(transaction.getTicker(), transaction.getQuantity(),
-        transaction.getPrice());
-    Position positionBuyerCash = new Position("CASH", totalPriceAsInt, 1);
+    double totalPrice = transaction.getPrice().doubleValue() * transaction.getQuantity();
+    // Update buyer wallet
+    Position positionBuyerTicker = new Position(transaction.getTicker(), transaction.getQuantity());
+    Position positionBuyerCash = new Position("CASH", -totalPrice);
     walletProxy.addPositions(transaction.getBuyer(), List.of(positionBuyerTicker, positionBuyerCash));
 
-    //Update seller wallet
-    Position positionSellerTicker = new Position(transaction.getTicker(), -transaction.getQuantity(), transaction.getPrice());
-    Position positionSellerCash = new Position("CASH", totalPrice.intValue(), 1);
+    // Update seller wallet
+    Position positionSellerTicker = new Position(transaction.getTicker(), -transaction.getQuantity());
+    Position positionSellerCash = new Position("CASH", totalPrice);
     walletProxy.addPositions(transaction.getSeller(), List.of(positionSellerTicker, positionSellerCash));
   }
 }

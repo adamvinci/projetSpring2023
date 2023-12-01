@@ -18,12 +18,32 @@ import java.util.Date;
 @Entity(name="investor")
 public class Investor {
 
+
+    /**
+     * Unique identifier for the investor.
+     */
     @Id
     private String username;
+
+    /**
+     * Email address of the investor.
+     */
     private String email;
+
+    /**
+     * First name of the investor.
+     */
     private String firstname;
+
+    /**
+     * Last name of the investor.
+     */
     private String lastname;
-    private LocalDate birthdate;
+
+    /**
+     * Birthdate of the investor.
+     */
+    private String birthdate;
 
 
 }

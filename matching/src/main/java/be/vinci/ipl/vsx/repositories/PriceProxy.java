@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient(name = "price-service")
 public interface PriceProxy {
 
+  /**
+   * Récupère le dernier prix en fonction du ticker.
+   * @param ticker Le ticker de l'instrument.
+   * @return Le dernier prix de l'instrument correspondant au ticker.
+   */
   @GetMapping("/price/{ticker}")
   Number getLastPrice(@PathVariable String ticker);
 }
