@@ -1,4 +1,4 @@
-package be.vinci.ipl.vsx.investor;
+package be.vinci.ipl.vsx.investor.models;
 
 
 import jakarta.persistence.Entity;
