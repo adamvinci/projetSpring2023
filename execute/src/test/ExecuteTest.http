@@ -93,7 +93,7 @@ POST http://localhost:9002/execute/AAFL/Alice/Bob
 Content-Type: application/json
 
 {
-  "ticker": "AAFL",
+  "ticker": "LNRD",
   "seller": "Alice",
   "buyer": "Bob",
   "buy_order_guid": "{{guidbuy}}",
@@ -122,11 +122,11 @@ Content-Type: application/json
 > {% client.global.set("guidbuyCedric", response.body.guid);%}
 
 ### Execute with good params (will be executed automatically by matching)
-POST http://localhost:9002/execute/AAFL/Alice/Bob
+POST http://localhost:9002/execute/AAFL/Alice/Cedric
 Content-Type: application/json
 
 {
-  "ticker": "AAFL",
+  "ticker": "LNRD",
   "seller": "Alice",
   "buyer": "Cedric",
   "buy_order_guid": "{{guidbuy}}",
@@ -156,11 +156,11 @@ Content-Type: application/json
 > {% client.global.set("guidbuyFred", response.body.guid);%}
 
 ### Execute with good params (will be executed automatically by matching)
-POST http://localhost:9002/execute/AAFL/Alice/Bob
+POST http://localhost:9002/execute/AAFL/Alice/Fred
 Content-Type: application/json
 
 {
-  "ticker": "AAFL",
+  "ticker": "LNRD",
   "seller": "Alice",
   "buyer": "Fred",
   "buy_order_guid": "{{guidbuy}}",
