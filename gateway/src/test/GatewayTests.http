@@ -134,3 +134,27 @@ Content-Type: application/json
     "quantity": -500
   }
 ]
+
+### Deposit Ticker in Investor's 1 account
+POST http://localhost:8080/wallet/TestInvestor1/position/AAPL
+Authorization: {{token}}
+Content-Type: application/json
+
+[
+  {
+    "ticker": "AAPL",
+    "quantity": 30
+  }
+]
+
+### Withdraw Ticker in Investor's 1 account
+POST http://localhost:8080/wallet/TestInvestor1/position/AAPL
+Authorization: {{token}}
+Content-Type: application/json
+
+[
+  {
+    "ticker": "AAPL",
+    "quantity": -12
+  }
+]

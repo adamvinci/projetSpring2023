@@ -187,4 +187,22 @@ public class GatewayController {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
+
+  @PostMapping("/wallet/{username}/position/{ticker}")
+  public ResponseEntity<List<PositionDTO>> WithdrawOrDepositTicker(@PathVariable String username, @PathVariable String ticker, @RequestHeader("Authorization") String token, @RequestBody
+  List<Position> positions){
+    String validToken = service.verify(token);
+    if(validToken == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    if(!validToken.equals(username)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
+    String tickerName = positions.get(0).getTicker();
+    if(!tickerName.equals(ticker)) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+    try {
+      List<PositionDTO> updatedList = service.addCash(username,positions);
+      return new ResponseEntity<>(updatedList, HttpStatus.OK);
+    } catch (NotFoundException e) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
 }
