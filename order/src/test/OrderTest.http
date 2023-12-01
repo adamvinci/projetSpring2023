@@ -1,7 +1,5 @@
-
-
 ### Create a buy order
-POST http://localhost:9010/order
+POST http://localhost:9001/order
 Content-Type: application/json
 
 {
@@ -14,7 +12,7 @@ Content-Type: application/json
 > {% client.global.set("guid", response.body.guid);%}
 
 ### Read the created order
-GET http://localhost:9010/order/{{guid}}
+GET http://localhost:9001/order/{{guid}}
 
 ### Read order by ticker and side before filled
 GET http://localhost:9001/order/open/by-ticker/AAFL/BUY

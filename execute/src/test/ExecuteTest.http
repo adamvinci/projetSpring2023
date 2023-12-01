@@ -59,7 +59,6 @@ GET http://localhost:9005/Bob/all-positions
 ### Verify the seller position (should be -5 LNRD and (11.5*5 = 57.5) CASH)
 GET http://localhost:9005/Alice/all-positions
 
-
 // EXAMPLE 6 from Project description :
 ### Create sell order
 POST http://localhost:9001/order
