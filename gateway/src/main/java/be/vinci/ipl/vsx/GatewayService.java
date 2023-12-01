@@ -3,6 +3,7 @@ package be.vinci.ipl.vsx;
 import be.vinci.ipl.vsx.data.AuthenticationProxy;
 import be.vinci.ipl.vsx.data.InvestorProxy;
 import be.vinci.ipl.vsx.data.OrderProxy;
+import be.vinci.ipl.vsx.data.PriceProxy;
 import be.vinci.ipl.vsx.data.WalletProxy;
 import be.vinci.ipl.vsx.exceptions.BadRequestException;
 import be.vinci.ipl.vsx.exceptions.ConflictException;
@@ -25,14 +26,16 @@ public class GatewayService {
   private final InvestorProxy investorProxy;
   private final OrderProxy orderProxy;
   private final WalletProxy walletProxy;
+  private final PriceProxy priceProxy;
 
 
   public GatewayService(AuthenticationProxy authenticationProxy, InvestorProxy investorProxy,
-      OrderProxy orderProxy, WalletProxy walletProxy) {
+      OrderProxy orderProxy, WalletProxy walletProxy, PriceProxy priceProxy) {
     this.authenticationProxy = authenticationProxy;
     this.investorProxy = investorProxy;
     this.orderProxy = orderProxy;
     this.walletProxy = walletProxy;
+    this.priceProxy = priceProxy;
   }
 
   /**
@@ -193,5 +196,13 @@ public class GatewayService {
     return walletProxy.addPositions(username, positions);
   }
 
+  public Double getLastPrice(String ticker){
+    try {
+      Double lastPrice = priceProxy.getLastPrice(ticker);
+      return lastPrice;
+    } catch (FeignException e){
+      throw e;
+    }
+  }
 
 }

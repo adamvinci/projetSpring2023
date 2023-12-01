@@ -205,4 +205,11 @@ public class GatewayController {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
+
+  @GetMapping("/price/{ticker}")
+  public ResponseEntity<Double> getLastPrice(@PathVariable String ticker){
+    Double lastPrice = service.getLastPrice(ticker);
+    return new ResponseEntity<>(lastPrice, HttpStatus.OK);
+  }
+
 }
