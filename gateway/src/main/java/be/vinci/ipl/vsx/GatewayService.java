@@ -71,6 +71,13 @@ public class GatewayService {
     }
   }
 
+  /**
+   * Create a new investor
+   * @param investor Investor's info
+   * @throws BadRequestException
+   * @throws ConflictException
+   */
+
   public void createInvestor(InvestorWithCredentials investor) throws BadRequestException, ConflictException {
     try {
       Investor investorWithoutCredentials = investor.toInvestor();
@@ -137,6 +144,11 @@ public class GatewayService {
   }
 
 
+  /**
+   * Update investor's credentials
+   * @param credentials New credentials (password)
+   * @return true if the investor's credentials have been updated
+   */
   public boolean updateInvestor(Credentials credentials){
     boolean changed = true;
     try {
@@ -148,6 +160,12 @@ public class GatewayService {
     return changed;
   }
 
+  /**
+   * Create a new order
+   * @param order new order's info
+   * @return new order created
+   * @throws BadRequestException
+   */
 
   public Order createOrder(Order order) throws BadRequestException {
     try {
@@ -158,6 +176,12 @@ public class GatewayService {
     return order;
   }
 
+  /**
+   * Get all the investor's orders
+   * @param username investor's username
+   * @return All the investor's order
+   * @throws NotFoundException
+   */
 
   public Iterable<Order> readAllOrdersByInvestor(String username) throws NotFoundException {
     try {
@@ -169,6 +193,12 @@ public class GatewayService {
   }
 
 
+  /**
+   * Calculate the investor's networth
+   * @param username investor's username
+   * @return Investor's networth
+   * @throws NotFoundException
+   */
   public Double getNetWorth(String username) throws NotFoundException {
     try {
       investorProxy.readOne(username);
@@ -178,6 +208,12 @@ public class GatewayService {
     return walletProxy.getNetWorth(username);
   }
 
+  /**
+   * Get investor's wallet
+   * @param username Investor's username
+   * @return Investor's wallet
+   * @throws NotFoundException
+   */
   public List<PositionDTO> getWalletComposition(String username) throws NotFoundException {
     try {
       investorProxy.readOne(username);
@@ -187,6 +223,13 @@ public class GatewayService {
     return walletProxy.getOpenPositions(username);
   }
 
+  /**
+   * Withdraw or deposit cash in investor's wallet
+   * @param username investor's username
+   * @param positions Position (Cash and quantity)
+   * @return Investor's updated wallet
+   * @throws NotFoundException
+   */
   public List<PositionDTO> addCash(String username, List<Position> positions) throws NotFoundException {
     try {
       investorProxy.readOne(username);
@@ -196,6 +239,11 @@ public class GatewayService {
     return walletProxy.addPositions(username, positions);
   }
 
+  /**
+   * Get the last price of a ticker
+   * @param ticker name of the ticker
+   * @return the last price of the ticker
+   */
   public Double getLastPrice(String ticker){
     try {
       Double lastPrice = priceProxy.getLastPrice(ticker);
