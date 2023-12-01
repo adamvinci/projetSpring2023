@@ -253,4 +253,17 @@ public class GatewayService {
     }
   }
 
+  public boolean investorValidRemoval(String username){
+    boolean valid = true;
+    try {
+      List<PositionDTO> wallet = walletProxy.getPositions(username);
+      for (int i = 0; i<wallet.size(); i++){
+        if(wallet.get(i).getQuantity() != 0) return false;
+      }
+    } catch (Exception e) {
+      throw e;
+    }
+    return valid;
+  }
+
 }

@@ -51,7 +51,7 @@ Authorization: {{token}}
 ### Delete 2nd Investor
 DELETE http://localhost:8080/investor/TestInvestor2
 Authorization: {{token}}
-// Should fail -> Internal Server Error (500)
+// Should fail
 
 ### Update 1st Investor
 PUT http://localhost:8080/investor/TestInvestor1
@@ -155,7 +155,7 @@ Content-Type: application/json
 [
   {
     "ticker": "AAPL",
-    "quantity": -12
+    "quantity": -18
   }
 ]
 

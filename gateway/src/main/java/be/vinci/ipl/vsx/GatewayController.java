@@ -98,6 +98,13 @@ public class GatewayController {
     if(validToken == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     if(!validToken.equals(username)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 
+    try {
+      boolean validForRemoval = service.investorValidRemoval(username);
+      if(!validForRemoval) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+
     boolean deleted = service.deleteInvestor(username);
     if(!deleted) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     return new ResponseEntity<>(HttpStatus.OK);
