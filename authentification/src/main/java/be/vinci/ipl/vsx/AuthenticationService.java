@@ -41,7 +41,7 @@ public class AuthenticationService {
   /**
    * Verifies JWT token
    * @param token The JWT token
-   * @return The username of the user, or null if the token couldn't be verified
+   * @return The username of the investor, or null if the token couldn't be verified
    */
   public String verify(String token) {
     try {
