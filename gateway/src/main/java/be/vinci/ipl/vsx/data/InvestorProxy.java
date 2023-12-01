@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 @FeignClient(name = "investor")
 public interface InvestorProxy {
 
-  @PostMapping("/investor")
-  String createInvestor(@RequestBody Investor investor);
+  @PostMapping("/investor/{username}")
+  String createInvestor(@PathVariable String username, @RequestBody Investor investor);
 
   @GetMapping("/investor/{username}")
   Investor readOne(@PathVariable String username);
