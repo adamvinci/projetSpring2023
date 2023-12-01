@@ -31,7 +31,11 @@ public class GatewayController {
   }
 
 
-
+  /**
+   * Connect investor using his credentials
+   * @param credentials investors credentials (password and username)
+   * @return token
+   */
   @PostMapping("/authentication/connect")
   public ResponseEntity<String> connect(@RequestBody Credentials credentials) {
 
@@ -45,6 +49,12 @@ public class GatewayController {
     }
   }
 
+  /**
+   * Create a new investor
+   * @param username Investor's username
+   * @param investor Investor's info
+   * @return Status created
+   */
   @PostMapping("/investor/{username}")
   public ResponseEntity<Void> createInvestor(@PathVariable String username, @RequestBody InvestorWithCredentials investor) {
     if (!Objects.equals(investor.getUsername(), username)) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -59,6 +69,12 @@ public class GatewayController {
     }
   }
 
+  /**
+   * Get investor's information
+   * @param username Investor's username
+   * @param token Investor's token
+   * @return Investor with all of it's info
+   */
   @GetMapping("/investor/{username}")
   public ResponseEntity<Investor> readInvestor(@PathVariable String username, @RequestHeader("Authorization") String token) {
     String validToken = service.verify(token);
@@ -130,6 +146,12 @@ public class GatewayController {
     }
   }
 
+  /**
+   * Read investor's orders
+   * @param username Investor's username
+   * @param token Investor's token
+   * @return List of the investor's order
+   */
   @GetMapping("/order/by-user/{username}")
   public ResponseEntity<Iterable<Order>> readAllOrdersByInvestor(@PathVariable String username, @RequestHeader("Authorization") String token){
     String validToken = service.verify(token);
@@ -144,6 +166,12 @@ public class GatewayController {
     }
   }
 
+  /**
+   * Calculate investor's net-worth based on his wallet
+   * @param username investor's username
+   * @param token investor's token
+   * @return Networth
+   */
   @GetMapping("/wallet/{username}/net-worth")
   public ResponseEntity<Double> getNetWorth(@PathVariable String username, @RequestHeader("Authorization") String token){
 
@@ -159,6 +187,12 @@ public class GatewayController {
     }
   }
 
+  /**
+   * Get investor's wallet open positions
+   * @param username Investor's username
+   * @param token Investor's token
+   * @return List of the investor's wallet open positions
+   */
   @GetMapping("/wallet/{username}")
   public ResponseEntity<List<PositionDTO>> getAllOpenPositions(@PathVariable String username, @RequestHeader("Authorization") String token){
     String validToken = service.verify(token);
@@ -173,6 +207,13 @@ public class GatewayController {
     }
   }
 
+  /**
+   * Withdraw or Deposit Cash from the investor's wallet
+   * @param username Investor's username
+   * @param token Investor's token
+   * @param positions Position (Cash and amount/quantity)
+   * @return Investor's updated wallet (after withdrawal or deposit)
+   */
   @PostMapping("/wallet/{username}")
   public ResponseEntity<List<PositionDTO>> WithdrawOrDepositCash(@PathVariable String username, @RequestHeader("Authorization") String token, @RequestBody
       List<Position> positions){
@@ -188,6 +229,15 @@ public class GatewayController {
     }
   }
 
+
+  /**
+   * Withdraw or deposit a ticker from the investor's wallet
+   * @param username Investor's username
+   * @param ticker Investor's ticker
+   * @param token Investor's token
+   * @param positions Position (Ticker and quantity)
+   * @return Investor's updated wallet (after withdrawal or deposit)
+   */
   @PostMapping("/wallet/{username}/position/{ticker}")
   public ResponseEntity<List<PositionDTO>> WithdrawOrDepositTicker(@PathVariable String username, @PathVariable String ticker, @RequestHeader("Authorization") String token, @RequestBody
   List<Position> positions){
@@ -206,6 +256,11 @@ public class GatewayController {
     }
   }
 
+  /**
+   * Get the last price of the ticker
+   * @param ticker name of the ticker
+   * @return the ticker's last price
+   */
   @GetMapping("/price/{ticker}")
   public ResponseEntity<Double> getLastPrice(@PathVariable String ticker){
     Double lastPrice = service.getLastPrice(ticker);
