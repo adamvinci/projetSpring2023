@@ -1,59 +1,63 @@
+//If test return 500 or 503 error code relaunch matching order and then execute wait for each service to start before launching the next one /////////////////////////////////////////
+
+// EXAMPLE 1 from Project description :
 ### Create sell order
 POST http://localhost:9001/order
 Content-Type: application/json
 
 {
-  "owner": "Cat4Life",
-  "ticker": "AAFL",
-  "quantity": 6,
-  "type": "MARKET",
-  "side": "SELL"
+  "owner": "Alice",
+  "ticker": "LNRD",
+  "quantity": 5,
+  "type": "LIMIT",
+  "side": "SELL",
+  "limit": 10
 }
 > {% client.global.set("guidsell", response.body.guid);%}
 
 
-### Create buy order
+### Create buy order (create a match in matching)
 POST http://localhost:9001/order
 Content-Type: application/json
 
 {
-  "owner": "Cat3Life",
-  "ticker": "AAFL",
-  "quantity": 4,
-  "type": "MARKET",
-  "side": "BUY"
+  "owner": "Bob",
+  "ticker": "LNRD",
+  "quantity": 5,
+  "type": "LIMIT",
+  "side": "BUY",
+  "limit": 13
 }
 > {% client.global.set("guidbuy", response.body.guid);%}
 
-### Execute with good params
-POST http://localhost:9002/execute/AAFL/Cat4Life/Cat3Life
+### Execute with good params (will be executed automatically by matching)
+POST http://localhost:9002/execute/AAFL/Alice/Bob
 Content-Type: application/json
 
 {
   "ticker": "AAFL",
-  "seller": "Cat4Life",
-  "buyer": "Cat3Life",
+  "seller": "Alice",
+  "buyer": "bob",
   "buy_order_guid": "{{guidbuy}}",
   "sell_order_guid": "{{guidsell}}",
-  "quantity": "4",
-  "price": "10"
+  "quantity": 5,
+  "price": 11.5
 }
 
-### Verify buy order (filled should be 4)
+### Verify buy order (filled should be 5)
 GET http://localhost:9001/order/{{guidbuy}}
 
-### Verify sell order (filled should be 4)
+### Verify sell order (filled should be 5)
 GET http://localhost:9001/order/{{guidsell}}
 
-### Verify that the price has been updated (should be 10)
-GET http://localhost:9003/price/AAFL
+### Verify that the price has been updated (should be 11.5)
+GET http://localhost:9003/price/LNRD
 
+### Verify the buyer position (should be 5 LNRD and -11.5 CASH)
+GET http://localhost:9005/Bob/all-positions
 
-### Verify the buyer position (should be 4 AAFL and -40 CASH)
-GET http://localhost:9005/Cat3Life/all-positions
-
-### Verify the buyer position (should be -4 AAFL and 40 CASH)
-GET http://localhost:9005/Cat4Life/positions
+### Verify the seller position (should be -5 LNRD and 11.5 CASH)
+GET http://localhost:9005/Alice/all-positions
 
 
 --------------------------------------------------------------------BAD_REQUEST TEST----------------------------------------------------------

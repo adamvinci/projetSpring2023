@@ -8,11 +8,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="investor" />
-        <module name="eureka" />
         <module name="authentification" />
+        <module name="eureka" />
         <module name="price" />
-        <module name="order" />
+        <module name="execute" />
+        <module name="demo" />
         <module name="matching" />
+        <module name="order" />
         <module name="authentication" />
       </profile>
     </annotationProcessing>
