@@ -30,7 +30,7 @@ Content-Type: application/json
 }
 > {% client.global.set("guidbuy", response.body.guid);%}
 
-### Execute with good params (will be executed automatically by matching)
+### Execute with good params (the transaction send by matching to execute)
 POST http://localhost:9002/execute/AAFL/Alice/Bob
 Content-Type: application/json
 
@@ -88,7 +88,7 @@ Content-Type: application/json
 }
 > {% client.global.set("guidbuyBob", response.body.guid);%}
 
-### Execute with good params (will be executed automatically by matching)
+### Execute with good params (the transaction send by matching to executeg)
 POST http://localhost:9002/execute/AAFL/Alice/Bob
 Content-Type: application/json
 
@@ -121,7 +121,7 @@ Content-Type: application/json
 }
 > {% client.global.set("guidbuyCedric", response.body.guid);%}
 
-### Execute with good params (will be executed automatically by matching)
+### Execute with good params (the transaction send by matching to execute)
 POST http://localhost:9002/execute/AAFL/Alice/Cedric
 Content-Type: application/json
 
@@ -155,7 +155,7 @@ Content-Type: application/json
 }
 > {% client.global.set("guidbuyFred", response.body.guid);%}
 
-### Execute with good params (will be executed automatically by matching)
+### Execute with good params (the transaction send by matching to execute)
 POST http://localhost:9002/execute/AAFL/Alice/Fred
 Content-Type: application/json
 
