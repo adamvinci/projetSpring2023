@@ -253,6 +253,11 @@ public class GatewayService {
     }
   }
 
+  /**
+   * Verify if the investor's wallet is empty
+   * @param username Investor's username
+   * @return true if the investor's wallet is empty
+   */
   public boolean investorValidRemoval(String username){
     boolean valid = true;
     try {
