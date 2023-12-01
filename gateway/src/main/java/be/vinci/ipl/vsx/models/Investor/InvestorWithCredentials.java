@@ -1,6 +1,7 @@
-package be.vinci.ipl.vsx.models;
+package be.vinci.ipl.vsx.models.Investor;
 
 
+import be.vinci.ipl.vsx.models.Credentials.Credentials;
 import java.time.LocalDate;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

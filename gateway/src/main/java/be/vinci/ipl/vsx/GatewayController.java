@@ -1,12 +1,11 @@
 package be.vinci.ipl.vsx;
 
 import be.vinci.ipl.vsx.exceptions.*;
-import be.vinci.ipl.vsx.models.*;
+import be.vinci.ipl.vsx.models.Credentials.Credentials;
+import be.vinci.ipl.vsx.models.Investor.Investor;
+import be.vinci.ipl.vsx.models.Investor.InvestorWithCredentials;
 import be.vinci.ipl.vsx.models.Order.Order;
-import feign.FeignException;
 import java.util.Objects;
-import java.util.Optional;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -136,6 +135,21 @@ public class GatewayController {
     try {
       Iterable<Order> orders = service.readAllOrdersByInvestor(username);
       return new ResponseEntity<>(orders, HttpStatus.OK);
+    } catch (NotFoundException e) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
+
+  @GetMapping("/wallet/{username}/net-worth")
+  public ResponseEntity<Double> getNetWorth(@PathVariable String username, @RequestHeader("Authorization") String token){
+
+    String validToken = service.verify(token);
+    if(validToken == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    if(!validToken.equals(username)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
+    try {
+      Double netWorth = service.getNetWorth(username);
+      return new ResponseEntity<>(netWorth, HttpStatus.OK);
     } catch (NotFoundException e) {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

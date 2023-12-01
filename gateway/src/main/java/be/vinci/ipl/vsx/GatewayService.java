@@ -3,19 +3,19 @@ package be.vinci.ipl.vsx;
 import be.vinci.ipl.vsx.data.AuthenticationProxy;
 import be.vinci.ipl.vsx.data.InvestorProxy;
 import be.vinci.ipl.vsx.data.OrderProxy;
+import be.vinci.ipl.vsx.data.WalletProxy;
 import be.vinci.ipl.vsx.exceptions.BadRequestException;
 import be.vinci.ipl.vsx.exceptions.ConflictException;
 import be.vinci.ipl.vsx.exceptions.NotFoundException;
 import be.vinci.ipl.vsx.exceptions.UnauthorizedException;
-import be.vinci.ipl.vsx.models.Investor;
-import be.vinci.ipl.vsx.models.InvestorWithCredentials;
+import be.vinci.ipl.vsx.models.Investor.Investor;
+import be.vinci.ipl.vsx.models.Investor.InvestorWithCredentials;
 import be.vinci.ipl.vsx.models.Order.Order;
+import be.vinci.ipl.vsx.models.Wallet.PositionDTO;
 import feign.FeignException;
+import java.util.List;
 import org.springframework.stereotype.Service;
-import be.vinci.ipl.vsx.models.Credentials;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import be.vinci.ipl.vsx.models.Credentials.Credentials;
 
 @Service
 public class GatewayService {
@@ -23,13 +23,15 @@ public class GatewayService {
   private final AuthenticationProxy authenticationProxy;
   private final InvestorProxy investorProxy;
   private final OrderProxy orderProxy;
+  private final WalletProxy walletProxy;
 
 
   public GatewayService(AuthenticationProxy authenticationProxy, InvestorProxy investorProxy,
-      OrderProxy orderProxy) {
+      OrderProxy orderProxy, WalletProxy walletProxy) {
     this.authenticationProxy = authenticationProxy;
     this.investorProxy = investorProxy;
     this.orderProxy = orderProxy;
+    this.walletProxy = walletProxy;
   }
 
   /**
@@ -160,6 +162,25 @@ public class GatewayService {
       if(e.status() == 404) throw new NotFoundException();
     }
     return orderProxy.readAllOrdersByUser(username);
+  }
+
+
+  public Double getNetWorth(String username) throws NotFoundException {
+    try {
+      investorProxy.readOne(username);
+    } catch (FeignException e){
+      if(e.status() == 404) throw new NotFoundException();
+    }
+    return walletProxy.getNetWorth(username);
+  }
+
+  public List<PositionDTO> getWalletComposition(String username) throws NotFoundException {
+    try {
+      investorProxy.readOne(username);
+    } catch (FeignException e){
+      if(e.status() == 404) throw new NotFoundException();
+    }
+    return walletProxy.getPositions(username);
   }
 
 }

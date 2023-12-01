@@ -1,6 +1,6 @@
 package be.vinci.ipl.vsx.data;
 
-import be.vinci.ipl.vsx.models.*;
+import be.vinci.ipl.vsx.models.Investor.Investor;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
