@@ -48,7 +48,12 @@ public class WalletController {
      */
     @PostMapping("/wallet/{username}")
     public  ResponseEntity<List<PositionDTO>> addPositions(@PathVariable String username, @RequestBody List<Position> newPositions) {
+
+
+
         List<PositionDTO> positions = walletService.addPositions(username, newPositions);
+
+
 
         return ResponseEntity.ok(positions);
     }

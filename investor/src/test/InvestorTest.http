@@ -1,19 +1,19 @@
 
 ### Create an user
-POST http://localhost:9006/investor
+POST http://localhost:9006/investor/picsou
 Content-Type: application/json
 
 {
-  "username": "testuser",
-  "email": "testuser@example.com",
-  "firstname": "John",
-  "lastname": "Doe",
-  "birthdate": "1990-01-01"
+  "username": "picsou",
+  "email": "picsou@canardville.com",
+  "firstname": "Scrooge",
+  "lastname": "McDuck",
+  "birthdate": "15/12/1947"
 }
 
 
 ### create second investor
-POST http://localhost:9006/investor
+POST http://localhost:9006/investor/billy
 Content-Type: application/json
 
 {
@@ -29,15 +29,60 @@ GET http://localhost:9006/investor/readAll
 
 
 ### read one by username
-GET http://localhost:9006/investor/testuser
+GET http://localhost:9006/investor/picsou
 
 
 ### update one investor by username
-PUT http://localhost:9006/investor/testuser
+PUT http://localhost:9006/investor/picsou
 Content-Type: application/json
 
 {
   "username": "testuser",
+  "email": "updated_picsou@example.com",
+  "firstname": "Updated",
+  "lastname": "McDuck",
+  "birthdate": "1990-01-01"
+}
+
+
+### delete one investor by username
+DELETE http://localhost:9006/investor/picsou
+
+
+
+-------BAD REQUEST --------------
+
+### Create an user with invalid data
+POST http://localhost:9006/investor/testuser1
+Content-Type: application/json
+
+{
+  "username": "testuser",
+  "email": "testuser@example.com",
+  "firstname": "John",
+  "lastname": "Doe",
+  "birthdate": "1990-01-01"
+}
+
+### create an investor that already exists
+POST http://localhost:9006/investor/testuser
+Content-Type: application/json
+
+{
+"username": "testuser",
+"email": "testuser@example.com",
+"firstname": "John",
+"lastname": "Doe",
+"birthdate": "1990-01-01"
+}
+
+
+### update one investor with invalid data
+PUT http://localhost:9006/investor/testuser
+Content-Type: application/json
+
+{
+  "username": "wrong investor",
   "email": "updateduser@example.com",
   "firstname": "Updated",
   "lastname": "User",
@@ -45,6 +90,15 @@ Content-Type: application/json
 }
 
 
-### delete one investor by username
-DELETE http://localhost:9006/investor/testuser
+### update an investor that does not exist
+PUT http://localhost:9006/investor/sebastien
+Content-Type: application/json
+
+{
+  "username": "sebastien",
+  "email": "sebastien@example.com",
+  "firstname": "sebastien",
+  "lastname": "sebastien",
+  "birthdate": "1990-01-01"
+}
 

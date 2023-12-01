@@ -2,6 +2,7 @@ package be.vinci.ipl.vsx.wallet.wallet;
 
 import be.vinci.ipl.vsx.wallet.wallet.data.PriceProxy;
 import be.vinci.ipl.vsx.wallet.wallet.data.WalletRepository;
+import be.vinci.ipl.vsx.wallet.wallet.models.Investor;
 import be.vinci.ipl.vsx.wallet.wallet.models.Position;
 import be.vinci.ipl.vsx.wallet.wallet.models.PositionDTO;
 import jakarta.transaction.Transactional;
@@ -117,6 +118,8 @@ public class WalletService {
                 break;
             }
         }
+
+        //add position CASH
         if (cashPosition == null) {
             cashPosition = new Position();
             cashPosition.setUsername(username);
@@ -135,6 +138,7 @@ public class WalletService {
                 }
             }
 
+            //if position already exists
             if (positionExists) {
                 existingPosition.setQuantity(existingPosition.getQuantity() + newPosition.getQuantity());
             } else {
