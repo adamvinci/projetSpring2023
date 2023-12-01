@@ -1,11 +1,12 @@
 ### Create safeCredentials
-POST http://localhost:9007/authentication/Test1
+POST http://localhost:9007/authentication/picsou
 Content-Type: application/json
 
 {
-  "username": "Test1",
+  "username": "picsou",
   "password": "PW1"
 }
+
 
 ### Update safeCredentials
 PUT http://localhost:9007/authentication/Test1

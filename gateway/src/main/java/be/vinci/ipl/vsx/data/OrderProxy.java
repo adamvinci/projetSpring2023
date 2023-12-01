@@ -1,6 +1,6 @@
 package be.vinci.ipl.vsx.data;
 
-import be.vinci.ipl.vsx.models.*;
+
 import be.vinci.ipl.vsx.models.Order.FilledQuantity;
 import be.vinci.ipl.vsx.models.Order.Order;
 import be.vinci.ipl.vsx.models.Order.OrderSide;

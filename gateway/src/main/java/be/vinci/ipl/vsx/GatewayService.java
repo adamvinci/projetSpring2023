@@ -81,7 +81,7 @@ public class GatewayService {
   public void createInvestor(InvestorWithCredentials investor) throws BadRequestException, ConflictException {
     try {
       Investor investorWithoutCredentials = investor.toInvestor();
-      investorProxy.createInvestor(investorWithoutCredentials);
+      investorProxy.createInvestor(investorWithoutCredentials.getUsername(),investorWithoutCredentials);
     } catch (FeignException e) {
       if (e.status() == 400) throw new BadRequestException();
       else if (e.status() == 409) throw new ConflictException();
