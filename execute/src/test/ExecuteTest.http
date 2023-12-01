@@ -88,6 +88,20 @@ Content-Type: application/json
 }
 > {% client.global.set("guidbuyBob", response.body.guid);%}
 
+### Execute with good params (will be executed automatically by matching)
+POST http://localhost:9002/execute/AAFL/Alice/Bob
+Content-Type: application/json
+
+{
+  "ticker": "AAFL",
+  "seller": "Alice",
+  "buyer": "Bob",
+  "buy_order_guid": "{{guidbuy}}",
+  "sell_order_guid": "{{guidbuyBob}}",
+  "quantity": 50,
+  "price": 10
+}
+
 ### Verify bob buy order (filled should be 50)
 GET http://localhost:9001/order/{{guidbuyBob}}
 
@@ -106,6 +120,20 @@ Content-Type: application/json
   "side": "BUY"
 }
 > {% client.global.set("guidbuyCedric", response.body.guid);%}
+
+### Execute with good params (will be executed automatically by matching)
+POST http://localhost:9002/execute/AAFL/Alice/Bob
+Content-Type: application/json
+
+{
+  "ticker": "AAFL",
+  "seller": "Alice",
+  "buyer": "Cedric",
+  "buy_order_guid": "{{guidbuy}}",
+  "sell_order_guid": "{{guidbuyCedric}}",
+  "quantity": 50,
+  "price": 10
+}
 
 ### Verify Cedric buy order (filled should be 50)
 GET http://localhost:9001/order/{{guidbuyCedric}}
@@ -126,6 +154,20 @@ Content-Type: application/json
   "limit": 11
 }
 > {% client.global.set("guidbuyFred", response.body.guid);%}
+
+### Execute with good params (will be executed automatically by matching)
+POST http://localhost:9002/execute/AAFL/Alice/Bob
+Content-Type: application/json
+
+{
+  "ticker": "AAFL",
+  "seller": "Alice",
+  "buyer": "Fred",
+  "buy_order_guid": "{{guidbuy}}",
+  "sell_order_guid": "{{guidbuyFred}}",
+  "quantity": 100,
+  "price": 10.5
+}
 
 ### Verify Cedric buy order (filled should be 100)
 GET http://localhost:9001/order/{{guidbuyFred}}
