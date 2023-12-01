@@ -88,7 +88,7 @@ Content-Type: application/json
 }
 > {% client.global.set("guidbuyBob", response.body.guid);%}
 
-### Execute with good params (the transaction send by matching to executeg)
+### Execute with good params (the transaction send by matching to execute)
 POST http://localhost:9002/execute/AAFL/Alice/Bob
 Content-Type: application/json
 
