@@ -22,7 +22,7 @@ Content-Type: application/json
 "birthdate": "1990-01-01"
 }
 ### get last price of AAPL
-GET http://localhost:9006/price/AAPL
+GET http://localhost:9003/price/AAPL
 
 
 ### get last price of MSFT
@@ -36,7 +36,7 @@ Content-Type: application/json
 
 
 ### add positions in an investor wallet
-POST http://localhost:9006/wallet/TestInvestor1
+POST http://localhost:9005/wallet/TestInvestor1
 Content-Type: application/json
 
 [
@@ -56,7 +56,7 @@ GET http://localhost:9005/wallet/billy/net-worth
 
 
 ### get all open positions
-GET http://localhost:9005/billy/positions
+GET http://localhost:9005/TestInvestor1/positions
 
 ### get all positions
 GET http://localhost:9005/testuser/all-positions

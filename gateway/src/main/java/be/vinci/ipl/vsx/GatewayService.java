@@ -180,7 +180,8 @@ public class GatewayService {
     } catch (FeignException e){
       if(e.status() == 404) throw new NotFoundException();
     }
-    return walletProxy.getPositions(username);
+    return walletProxy.getOpenPositions(username);
   }
+
 
 }

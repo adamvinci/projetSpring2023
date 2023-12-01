@@ -107,3 +107,6 @@ Authorization: {{token}}
 GET http://localhost:8080/wallet/TestInvestor1/net-worth
 Authorization: {{token}}
 
+### Get Investor's openPositions (Wallet Composition)
+GET http://localhost:8080/wallet/TestInvestor1
+Authorization: {{token}}

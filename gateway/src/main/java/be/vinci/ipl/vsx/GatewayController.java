@@ -5,6 +5,8 @@ import be.vinci.ipl.vsx.models.Credentials.Credentials;
 import be.vinci.ipl.vsx.models.Investor.Investor;
 import be.vinci.ipl.vsx.models.Investor.InvestorWithCredentials;
 import be.vinci.ipl.vsx.models.Order.Order;
+import be.vinci.ipl.vsx.models.Wallet.PositionDTO;
+import java.util.List;
 import java.util.Objects;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -154,4 +156,19 @@ public class GatewayController {
       return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
   }
+
+  @GetMapping("/wallet/{username}")
+  public ResponseEntity<List<PositionDTO>> getAllOpenPositions(@PathVariable String username, @RequestHeader("Authorization") String token){
+    String validToken = service.verify(token);
+    if(validToken == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    if(!validToken.equals(username)) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
+    try {
+      List<PositionDTO> positions = service.getWalletComposition(username);
+      return new ResponseEntity<>(positions,HttpStatus.OK);
+    } catch (NotFoundException e) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
+
 }
